@@ -4,6 +4,13 @@
 #include<string>
 #include<vector>
 
+#include<sstream>
+#include "viaje.cpp"
+#include "viaje.h"
+#define DELIMITADOR_CAMPOS " "
+#define ARCHIVO_DE_VIAJES "Viajes.txt"
+
+
 
 using namespace std;
 
@@ -11,9 +18,12 @@ void mostrarDatos();
 void opciones();
 void agregarTerminal();
 void quitarTerminal();
+
+void lecturaDeArchivoViajes();
 int numero;
 int main() {
-    opciones();
+    lecturaDeArchivoViajes();
+    // opciones();
     return 0;
 
 }
@@ -120,3 +130,64 @@ void opciones(){
             opciones();
     }
 }
+
+
+ /// lectura de viajes   
+void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
+    string cadena,subcadena;
+    string nombre;
+    string codigo_partida,codigo_destino;
+    float horas_viaje;
+    int costo_viaje;
+    int posInicio,posFin;
+   
+    vector<Viaje> listaDeViajes;// lista de todos los viajes en archivo
+    int posLista=0;
+    //vector<string> lines; //Vector para guardar los datos del archivo
+
+    ifstream viajes (ARCHIVO_DE_VIAJES, ios::in);
+  //Se abre el archivo en modo lectura
+    if (viajes.is_open()){ //Si el archivo se abre
+        stringstream ss;
+        while(getline(viajes,cadena)){ //y se pueda leer una linea
+            posInicio=0;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,posFin);
+            ss<<subcadena;
+            ss>>codigo_partida;
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,posFin);
+            ss<<subcadena;
+            ss>>codigo_destino;
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,posFin);
+            ss<<subcadena;
+            ss>>costo_viaje;
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,posFin);
+            ss<<subcadena;
+            ss>>horas_viaje;
+
+           
+            listaDeViajes.push_back(Viaje ("COR","RET",1,2.1));
+            posLista+=1;
+             stringstream ss;
+           // lines.push_back(line); 
+            
+
+            //Se guarda en el vector
+            // stringstream ss;
+        }
+        viajes.close(); //al salir del ciclo se cierra el archivo
+    }
+    else cout<<"No se puede abrir el archivo";
+
+     for(int v=0; v<listaDeViajes.size(); ++v){ //Se recorre el vector para mostrar los datos
+         cout<<listaDeViajes[v].imprimir()<<'\n';
+       
+     }
+}
+
