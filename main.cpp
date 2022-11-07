@@ -23,7 +23,7 @@ void lecturaDeArchivoViajes();
 int numero;
 int main() {
     lecturaDeArchivoViajes();
-    // opciones();
+    opciones();
     return 0;
 
 }
@@ -104,6 +104,8 @@ void quitarTerminal(){
 }
 
 void opciones(){
+    while (numero != 4 || numero > 5)
+    {
     cout << "\n\nMenu de Opciones" << endl;
     cout << "1. Mostrar todas las terminales" << endl;
     cout << "2. Agregar una terminal" << endl;
@@ -123,14 +125,14 @@ void opciones(){
         case 3:
             quitarTerminal(); break;
         case 4:
-            cout << "Adios!" << endl;
+            cout << "Adios!" << endl; break;
 
         default:
             cout<<"Opcion incorrecta";
             opciones();
     }
 }
-
+}
 
  /// lectura de viajes   
 void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
