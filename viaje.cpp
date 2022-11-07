@@ -27,7 +27,7 @@ using namespace std;
     float Viaje::get_horas_viaje(){
         return horas_viaje;
     };
-    string Viaje::imprimir(){
-        return "destino :"+ codigo_destino +"origen :"+ codigo_partida;
+    void Viaje::imprimir(){
+        cout<<"origen :"<<codigo_partida<< " destino :"<< codigo_destino<<"costo : "<<costo_viaje<<"horas de viaje : "<< horas_viaje<<endl;
     };
 

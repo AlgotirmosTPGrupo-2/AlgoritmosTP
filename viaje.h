@@ -22,6 +22,6 @@ public:
     string get_codigo_destino ();
     int get_costo_viaje ();
     float get_horas_viaje();
-    string imprimir();
+    void imprimir();
 };
 #endif // VIAJE_H_INCLUDED

@@ -3,6 +3,7 @@
 #include<fstream>
 #include<string>
 #include<vector>
+#include<string.h>
 
 #include<sstream>
 #include "viaje.cpp"
@@ -18,7 +19,8 @@ void mostrarDatos();
 void opciones();
 void agregarTerminal();
 void quitarTerminal();
-
+int convierteAInt(string i);
+float convierteAFloat(string i);
 void lecturaDeArchivoViajes();
 int numero;
 int main() {
@@ -104,7 +106,7 @@ void quitarTerminal(){
 }
 
 void opciones(){
-    while (numero != 4 || numero > 5)
+    while (numero != 4 )
     {
     cout << "\n\nMenu de Opciones" << endl;
     cout << "1. Mostrar todas las terminales" << endl;
@@ -150,33 +152,42 @@ void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
     ifstream viajes (ARCHIVO_DE_VIAJES, ios::in);
   //Se abre el archivo en modo lectura
     if (viajes.is_open()){ //Si el archivo se abre
-        stringstream ss;
-        while(getline(viajes,cadena)){ //y se pueda leer una linea
+        
+        while(getline(viajes,cadena)){
+            stringstream ss;
+            cout<<"registro Leido"<<cadena<<endl ;//y se pueda leer una linea
             posInicio=0;
             posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
-            subcadena=cadena.substr(posInicio,posFin);
-            ss<<subcadena;
-            ss>>codigo_partida;
+            
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            
+            codigo_partida=subcadena;
+            posInicio=posFin+1;
+            
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            
+            codigo_destino=subcadena;
             posInicio=posFin+1;
             posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
-            subcadena=cadena.substr(posInicio,posFin);
-            ss<<subcadena;
-            ss>>codigo_destino;
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            
+            costo_viaje=convierteAInt(subcadena);
             posInicio=posFin+1;
             posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
-            subcadena=cadena.substr(posInicio,posFin);
-            ss<<subcadena;
-            ss>>costo_viaje;
-            posInicio=posFin+1;
-            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
-            subcadena=cadena.substr(posInicio,posFin);
-            ss<<subcadena;
-            ss>>horas_viaje;
-
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
            
-            listaDeViajes.push_back(Viaje ("COR","RET",1,2.1));
-            posLista+=1;
-             stringstream ss;
+            horas_viaje=convierteAFloat(subcadena);
+            
+            Viaje nombre=Viaje(codigo_partida,codigo_destino,costo_viaje,horas_viaje);
+           
+             listaDeViajes.push_back(nombre);
+            
+             
+             posLista+=1;
+
+
+             
            // lines.push_back(line); 
             
 
@@ -187,9 +198,25 @@ void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
     }
     else cout<<"No se puede abrir el archivo";
 
-     for(int v=0; v<listaDeViajes.size(); ++v){ //Se recorre el vector para mostrar los datos
-         cout<<listaDeViajes[v].imprimir()<<'\n';
+     for(int v=0; v<listaDeViajes.size(); v++){ //Se recorre el vector para mostrar los datos
+         listaDeViajes[v].imprimir();
        
      }
+
 }
+int convierteAInt(string i){
+    stringstream ss;
+    int num;
+    ss<<i;
+    ss>>num;
+    return num;
+};
+float convierteAFloat(string i){
+    stringstream ss;
+    float num;
+    ss<<i;
+    ss>>num;
+    return num;
+};
+
 
