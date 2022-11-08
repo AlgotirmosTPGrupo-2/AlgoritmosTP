@@ -25,11 +25,20 @@ void quitarTerminal();
 int convierteAInt(string i);
 float convierteAFloat(string i);
 void lecturaDeArchivoViajes();
+void lecturaYCargoDeTerminales();
+void imprimirTerminales();
+void cabeceraDeTerminal();
+void crearClaseTerminal(string cadena);
+string convierteAStringF(float i);
+string convierteAStringInt(int i);
+
 int numero;
 vector<Terminal> listaTerminales;
 int main() {
     lecturaDeArchivoViajes();
+    lecturaYCargoDeTerminales();
     opciones();
+    imprimirTerminales();
     return 0;
 
 }
@@ -37,88 +46,33 @@ int main() {
 void mostrarDatos(){ //Funcion para mostrar los datos del archivo
     string cadena,subcadena;
    
-    string codigo,nombre,ciudad,pais;
-    float superficie;
-    int cantidadTerminales, destinosNacionales, destinosInternacionales;
-    //
-    int posInicio,posFin;
+    
     vector<string> lines; //Vector para guardar los datos del archivo
     ifstream myfile (ARCHIVO_DE_TERMINALES, ios::in);
   
     if (myfile.is_open()){ //Si el archivo se abre
         while(getline(myfile,cadena)){ //y se pueda leer una linea
-            stringstream s;
+           
             lines.push_back(cadena); //Se guarda en el vector
-            
-           
-            posInicio=0;
-            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
-            subcadena=cadena.substr(posInicio,(posFin-posInicio));
-            codigo=subcadena;
-
-            posInicio=posFin+1;
-            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
-            subcadena=cadena.substr(posInicio,(posFin-posInicio));
-            nombre=subcadena;
-
-            posInicio=posFin+1;
-            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
-            subcadena=cadena.substr(posInicio,(posFin-posInicio));
-            ciudad=subcadena;
-
-            posInicio=posFin+1;
-            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
-            subcadena=cadena.substr(posInicio,(posFin-posInicio));
-            pais=subcadena;
-
-            posInicio=posFin+1;
-            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
-            subcadena=cadena.substr(posInicio,(posFin-posInicio));
-            superficie=convierteAFloat(subcadena);
-
-            posInicio=posFin+1;
-            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
-            subcadena=cadena.substr(posInicio,(posFin-posInicio));
-            cantidadTerminales=convierteAInt(subcadena);
-
-            posInicio=posFin+1;
-            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
-            subcadena=cadena.substr(posInicio,(posFin-posInicio));
-            destinosNacionales=convierteAInt(subcadena);
-
-            posInicio=posFin+1;
-            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
-            subcadena=cadena.substr(posInicio,(posFin-posInicio));
-            destinosInternacionales=convierteAInt(subcadena);
-
-            Terminal nombreT=Terminal(codigo,nombre,ciudad,pais,superficie,cantidadTerminales, destinosNacionales,destinosInternacionales);
-           
-            listaTerminales.push_back(nombreT);
-            
-        
-             
-
-            
+         
         }
         myfile.close(); //al salir del ciclo se cierra el archivo
     }
     else cout<<"No se puede abrir el archivo";
 
-    // 1
-    
-    cout<< "codigo  nombre      ciudad      pais           sup   cantTerm      cantDestNac    cantDestInter" <<endl;
-    for(int v=0; v<listaTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
-         listaTerminales[v].imprimir();
+     for(int i=0; i<lines.size(); ++i){ //Se recorre el vector para mostrar los datos
+        cout<<lines[i]<<'\n';
        
      }
 
 }
 
 void agregarTerminal(){
+
     ofstream myfile;
     myfile.open(ARCHIVO_DE_TERMINALES, ios::app);
    
-    string codigo, nombre, ciudad, pais;
+    string codigo, nombre, ciudad, pais,cadena,cadena2;
     float superficie;
     int cantidadTerminales, destinosNacionales, destinosInternacionales;
     cout<<"Ingrese el codigo de la terminal: ";
@@ -137,8 +91,13 @@ void agregarTerminal(){
     cin>>destinosNacionales;cout<<endl;
     cout<<"Ingrese la cantidad de destinos internacionales de la terminal: ";
     cin>>destinosInternacionales;cout<<endl;
+    
     myfile<<codigo<<" "<<nombre<<" "<<ciudad<<" "<<pais<<" "<<superficie<<" "<<cantidadTerminales<<" "<<destinosNacionales<<" "<<destinosInternacionales<<endl; //Se escribe en el archivo
     myfile.close(); //Se cierra el archivo
+    
+    
+    cadena=codigo+DELIMITADOR_CAMPOS+nombre+DELIMITADOR_CAMPOS+ciudad+DELIMITADOR_CAMPOS+pais+ DELIMITADOR_CAMPOS+convierteAStringF(superficie)+DELIMITADOR_CAMPOS+convierteAStringInt(cantidadTerminales)+DELIMITADOR_CAMPOS+convierteAStringInt(destinosNacionales)+DELIMITADOR_CAMPOS+convierteAStringInt(destinosInternacionales);
+    crearClaseTerminal(cadena);
 }
 
 void quitarTerminal(){
@@ -169,6 +128,8 @@ void quitarTerminal(){
         myfile2<<lines[i]<<endl;
     }
     myfile2.close(); //Se cierra el archivo nuevo
+
+    listaTerminales.erase(listaTerminales.begin()+numero-1);//se borra la clase instanciada de terminal de la lista de terminales también
 }
 
 void opciones(){
@@ -249,11 +210,7 @@ void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
            
              listaDeViajes.push_back(nombre);
             
-             
-            //  posLista+=1;
-
-
-             
+        
           
         }
         viajes.close(); //al salir del ciclo se cierra el archivo
@@ -266,6 +223,105 @@ void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
      }
 
 }
+
+void lecturaYCargoDeTerminales() {
+     string cadena,subcadena;
+   
+    string codigo,nombre,ciudad,pais;
+    float superficie;
+    int cantidadTerminales, destinosNacionales, destinosInternacionales;
+    //
+    int posInicio,posFin;
+   
+    ifstream myfile (ARCHIVO_DE_TERMINALES, ios::in);
+  
+    if (myfile.is_open()){ //Si el archivo se abre
+        while(getline(myfile,cadena)){ //y se pueda leer una linea
+            stringstream s;
+            crearClaseTerminal(cadena);
+            
+        }
+        myfile.close(); //al salir del ciclo se cierra el archivo
+    }
+    else cout<<"No se puede abrir el archivo";
+
+  
+    
+    
+       
+     };
+void crearClaseTerminal(string cadena){
+     string subcadena;
+   
+    string codigo,nombre,ciudad,pais;
+    float superficie;
+    int cantidadTerminales, destinosNacionales, destinosInternacionales;
+    //
+    int posInicio,posFin;
+     stringstream s;
+     posInicio=0;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            codigo=subcadena;
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            nombre=subcadena;
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            ciudad=subcadena;
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            pais=subcadena;
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            superficie=convierteAFloat(subcadena);
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            cantidadTerminales=convierteAInt(subcadena);
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            destinosNacionales=convierteAInt(subcadena);
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            destinosInternacionales=convierteAInt(subcadena);
+
+            Terminal nombreT=Terminal(codigo,nombre,ciudad,pais,superficie,cantidadTerminales, destinosNacionales,destinosInternacionales);
+           
+            listaTerminales.push_back(nombreT);
+
+}     
+    
+
+
+void cabeceraDeTerminal(){
+      cout<< "****    ****    ****    ****    ****    ****    ****    ****    ****    ****    ****    ****" <<endl;
+      cout<< "codigo  nombre      ciudad      pais           sup   cantTerm      cantDestNac    cantDestInter" <<endl;
+}
+void imprimirTerminales(){
+
+     cabeceraDeTerminal();
+    for(int v=0; v<listaTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
+         listaTerminales[v].imprimir();
+}
+ } ;
+
+
+
+
 int convierteAInt(string i){
     stringstream ss;
     int num;
@@ -273,6 +329,21 @@ int convierteAInt(string i){
     ss>>num;
     return num;
 };
+string convierteAStringF(float i){
+    stringstream ss;
+    ss<<i;
+    string str=ss.str();
+    return str;
+
+} 
+string convierteAStringInt(int i){
+    stringstream ss;
+    ss<<i;
+    string str=ss.str();
+    return str;
+
+} 
+
 float convierteAFloat(string i){
     stringstream ss;
     float num;
