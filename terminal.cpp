@@ -25,3 +25,25 @@ using namespace std;
     void Terminal::addViaje(Viaje v){
          listaDeMisViajes.push_back(v);
     };
+    void Terminal::imprimir(){
+        string espacios;
+        std::string strCod(espacios);
+        strCod.insert(0, 5, ' ');
+        int repNombre= 12 - (nombre.length());
+        std::string strNom(espacios);
+        strNom.insert(0, repNombre, ' ');
+
+        int repCiudad= 12 - (ciudad.length());
+        std::string strCiu(espacios);
+        strCiu.insert(0, repCiudad, ' ');
+
+        int repPais= 15 - (pais.length());
+        std::string strPais(espacios);
+        strPais.insert(0, repPais, ' ');
+
+        
+        
+
+
+        cout<< codigo<<strCod<<nombre<<strNom<<ciudad<<strCiu<< pais<<strPais<< superficie<<"        " <<cantidadTerminales<<"               "<<destinosNacionales<<"            " <<destinosInternacionales<<endl;
+    };

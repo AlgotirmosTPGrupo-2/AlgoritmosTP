@@ -104,9 +104,14 @@ void mostrarDatos(){ //Funcion para mostrar los datos del archivo
     }
     else cout<<"No se puede abrir el archivo";
 
-    for(int i=0; i<lines.size(); ++i){ //Se recorre el vector para mostrar los datos
-        cout<<lines[i]<<'\n';
-    }
+    // 1
+    
+    cout<< "codigo  nombre      ciudad      pais           sup   cantTerm      cantDestNac    cantDestInter" <<endl;
+    for(int v=0; v<listaTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
+         listaTerminales[v].imprimir();
+       
+     }
+
 }
 
 void agregarTerminal(){
