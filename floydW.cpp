@@ -11,7 +11,7 @@ int graph[MAX_VERTICES][MAX_VERTICES] = {
 };
 int P[MAX_VERTICES][MAX_VERTICES]; //Matriz de predecesores, utilizada para trazar las rutas
 int D[MAX_VERTICES][MAX_VERTICES]; //Matriz de distancias, guarda la distancia mas corta entre todos los pares de vertices
-
+int V=10;// se coloco un numewro para que no chille!!!!!
 void getPath(int a,int b){
     if(P[a][b]==b){
         cout << b << " ";

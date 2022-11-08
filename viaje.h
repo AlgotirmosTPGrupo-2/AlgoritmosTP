@@ -2,6 +2,7 @@
 #define VIAJE_H_INCLUDED
 #include <iostream>
 #include<string>
+#include<string.h>
 using namespace std;
 
 class Viaje/* una lista es un puntero a un PRIMER nodo*/

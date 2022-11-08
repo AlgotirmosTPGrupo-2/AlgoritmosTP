@@ -5,24 +5,26 @@
 #include<vector>
 #include "viaje.h"
 #include "viaje.cpp"
+#include<string.h>
 using namespace std;
 
-class Terminal/* una lista es un puntero a un PRIMER nodo*/
+class Terminal
 {
 private:
     // atributos
     string codigo,nombre,ciudad,pais;
     float superficie;
     int cantidadTerminales, destinosNacionales, destinosInternacionales;
-    vector<Viaje> listaDeViajes;
+    vector<Viaje> listaDeMisViajes;
    
 
 public:
     
-    Terminal(string _codigo,string  _nombre,string _ciudad,string _pais,float _superficie,int _cantidadTerminales,int _destinosNacionales,int _destinosInternacionales);//constructor
+    Terminal(string _codigo,string _nombre,string _ciudad,string _pais,float _superficie,int _cantidadTerminales,int _destinosNacionales,int _destinosInternacionales);//constructor
 
 
     string get_codigo();
+    void addViaje(Viaje v);
     
 };
 #endif // TERMINAL_H_INCLUDED

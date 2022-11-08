@@ -4,12 +4,15 @@
 #include<string>
 #include<vector>
 #include<string.h>
+#include "terminal.h"
+#include "terminal.cpp"
 
 #include<sstream>
-#include "viaje.cpp"
+
 #include "viaje.h"
 #define DELIMITADOR_CAMPOS " "
-#define ARCHIVO_DE_VIAJES "Viajes.txt"
+#define ARCHIVO_DE_VIAJES "viajes.txt"
+#define ARCHIVO_DE_TERMINALES "terminales.txt"
 
 
 
@@ -23,6 +26,7 @@ int convierteAInt(string i);
 float convierteAFloat(string i);
 void lecturaDeArchivoViajes();
 int numero;
+vector<Terminal> listaTerminales;
 int main() {
     lecturaDeArchivoViajes();
     opciones();
@@ -31,13 +35,70 @@ int main() {
 }
 
 void mostrarDatos(){ //Funcion para mostrar los datos del archivo
-    string line;
+    string cadena,subcadena;
+   
+    string codigo,nombre,ciudad,pais;
+    float superficie;
+    int cantidadTerminales, destinosNacionales, destinosInternacionales;
+    //
+    int posInicio,posFin;
     vector<string> lines; //Vector para guardar los datos del archivo
-    ifstream myfile ("terminales.txt", ios::in);
-  //  ifstream myfile ("C:/Users/Administrador/CLionProjects/untitled/terminales.txt", ios::in); //Se abre el archivo en modo lectura
+    ifstream myfile (ARCHIVO_DE_TERMINALES, ios::in);
+  
     if (myfile.is_open()){ //Si el archivo se abre
-        while(getline(myfile,line)){ //y se pueda leer una linea
-            lines.push_back(line); //Se guarda en el vector
+        while(getline(myfile,cadena)){ //y se pueda leer una linea
+            stringstream s;
+            lines.push_back(cadena); //Se guarda en el vector
+            
+           
+            posInicio=0;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            codigo=subcadena;
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            nombre=subcadena;
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            ciudad=subcadena;
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            pais=subcadena;
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            superficie=convierteAFloat(subcadena);
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            cantidadTerminales=convierteAInt(subcadena);
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            destinosNacionales=convierteAInt(subcadena);
+
+            posInicio=posFin+1;
+            posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            subcadena=cadena.substr(posInicio,(posFin-posInicio));
+            destinosInternacionales=convierteAInt(subcadena);
+
+            Terminal nombreT=Terminal(codigo,nombre,ciudad,pais,superficie,cantidadTerminales, destinosNacionales,destinosInternacionales);
+           
+            listaTerminales.push_back(nombreT);
+            
+        
+             
+
+            
         }
         myfile.close(); //al salir del ciclo se cierra el archivo
     }
@@ -50,8 +111,8 @@ void mostrarDatos(){ //Funcion para mostrar los datos del archivo
 
 void agregarTerminal(){
     ofstream myfile;
-    myfile.open("terminales.txt", ios::app);
-   // myfile.open("C:/Users/Administrador/CLionProjects/untitled/terminales.txt", ios::app); //Se abre el archivo en modo append
+    myfile.open(ARCHIVO_DE_TERMINALES, ios::app);
+   
     string codigo, nombre, ciudad, pais;
     float superficie;
     int cantidadTerminales, destinosNacionales, destinosInternacionales;
@@ -79,8 +140,8 @@ void quitarTerminal(){
     string line;
     vector<string> lines; //Se crea un vector para guardar los datos del archivo
 
-    ifstream myfile ("terminales.txt", ios::in);
-   // ifstream myfile ("C:/Users/Administrador/CLionProjects/untitled/terminales.txt", ios::in);  //Se abre el archivo en modo lectura
+    ifstream myfile (ARCHIVO_DE_TERMINALES, ios::in);//Se abre el archivo en modo lectura
+  
     if (myfile.is_open()){ //Si el archivo se abre
         while(getline(myfile,line)){ //y se pueda leer una linea
             lines.push_back(line); //Se guarda en el vector
@@ -97,8 +158,8 @@ void quitarTerminal(){
     lines.erase(lines.begin()+numero-1); //Se elimina la linea del vector
     ofstream myfile2; //Se crea un archivo nuevo
 
-    myfile2.open("terminales.txt", ios::out);
-   // myfile2.open("C:/Users/Administrador/CLionProjects/untitled/terminales.txt", ios::out); //Se abre el archivo nuevo en modo escritura
+    myfile2.open(ARCHIVO_DE_TERMINALES, ios::out);//Se abre el archivo en modo lectura
+   
     for(int i=0; i<lines.size(); ++i){ //Se recorre el vector para escribir los datos en el archivo nuevo
         myfile2<<lines[i]<<endl;
     }
@@ -146,7 +207,7 @@ void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
     int posInicio,posFin;
    
     vector<Viaje> listaDeViajes;// lista de todos los viajes en archivo
-    int posLista=0;
+    // int posLista=0;
     //vector<string> lines; //Vector para guardar los datos del archivo
 
     ifstream viajes (ARCHIVO_DE_VIAJES, ios::in);
@@ -155,7 +216,7 @@ void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
         
         while(getline(viajes,cadena)){
             stringstream ss;
-            cout<<"registro Leido"<<cadena<<endl ;//y se pueda leer una linea
+           
             posInicio=0;
             posFin=cadena.find_first_of(DELIMITADOR_CAMPOS,posInicio);
             
@@ -184,15 +245,11 @@ void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
              listaDeViajes.push_back(nombre);
             
              
-             posLista+=1;
+            //  posLista+=1;
 
 
              
-           // lines.push_back(line); 
-            
-
-            //Se guarda en el vector
-            // stringstream ss;
+          
         }
         viajes.close(); //al salir del ciclo se cierra el archivo
     }

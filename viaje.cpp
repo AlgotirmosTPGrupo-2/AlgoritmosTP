@@ -1,6 +1,7 @@
 #include "viaje.h"
 #include <iostream>
 #include<string>
+#include<string.h>
 using namespace std;
 
 
@@ -14,7 +15,7 @@ using namespace std;
     };//constructor
 
 
-    string Viaje:: get_codigo_partida (){
+    string Viaje::get_codigo_partida (){
         return codigo_partida;
 
     };
