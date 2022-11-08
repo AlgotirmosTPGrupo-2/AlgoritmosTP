@@ -26,6 +26,8 @@ public:
     string get_codigo();
     void addViaje(Viaje v);
     void imprimir();
+    bool esMiCodigo(string cod);
+    void imprimirViajes();
     
 };
 #endif // TERMINAL_H_INCLUDED

@@ -31,29 +31,33 @@ void cabeceraDeTerminal();
 void crearClaseTerminal(string cadena);
 string convierteAStringF(float i);
 string convierteAStringInt(int i);
-
+void imprimirViajes2();//IMPRIMIR VIAJES POR TERMINAL
+vector<Viaje> listaDeViajes;// lista de todos los viajes en archivo
 int numero;
+int CONTADOR_INCONSISTENCIAS;
 vector<Terminal> listaTerminales;
 int main() {
-    lecturaDeArchivoViajes();
+    
     lecturaYCargoDeTerminales();
+    lecturaDeArchivoViajes();
     opciones();
     imprimirTerminales();
+    imprimirViajes2();
     return 0;
 
-}
+};
 
 void mostrarDatos(){ //Funcion para mostrar los datos del archivo
-    string cadena,subcadena;
+    string line;
    
     
     vector<string> lines; //Vector para guardar los datos del archivo
     ifstream myfile (ARCHIVO_DE_TERMINALES, ios::in);
   
     if (myfile.is_open()){ //Si el archivo se abre
-        while(getline(myfile,cadena)){ //y se pueda leer una linea
+        while(getline(myfile,line)){ //y se pueda leer una linea
            
-            lines.push_back(cadena); //Se guarda en el vector
+            lines.push_back(line); //Se guarda en el vector
          
         }
         myfile.close(); //al salir del ciclo se cierra el archivo
@@ -72,7 +76,7 @@ void agregarTerminal(){
     ofstream myfile;
     myfile.open(ARCHIVO_DE_TERMINALES, ios::app);
    
-    string codigo, nombre, ciudad, pais,cadena,cadena2;
+    string codigo, nombre, ciudad, pais,cadena;
     float superficie;
     int cantidadTerminales, destinosNacionales, destinosInternacionales;
     cout<<"Ingrese el codigo de la terminal: ";
@@ -91,13 +95,18 @@ void agregarTerminal(){
     cin>>destinosNacionales;cout<<endl;
     cout<<"Ingrese la cantidad de destinos internacionales de la terminal: ";
     cin>>destinosInternacionales;cout<<endl;
+
+
+    cadena=codigo+DELIMITADOR_CAMPOS+nombre+DELIMITADOR_CAMPOS+ciudad+DELIMITADOR_CAMPOS+pais+ DELIMITADOR_CAMPOS+convierteAStringF(superficie)+DELIMITADOR_CAMPOS+convierteAStringInt(cantidadTerminales)+DELIMITADOR_CAMPOS+convierteAStringInt(destinosNacionales)+DELIMITADOR_CAMPOS+convierteAStringInt(destinosInternacionales);
+    crearClaseTerminal(cadena);
+
     
     myfile<<codigo<<" "<<nombre<<" "<<ciudad<<" "<<pais<<" "<<superficie<<" "<<cantidadTerminales<<" "<<destinosNacionales<<" "<<destinosInternacionales<<endl; //Se escribe en el archivo
+    //cout<<codigo<<" "<<nombre<<" "<<ciudad<<" "<<pais<<" "<<superficie<<" "<<cantidadTerminales<<" "<<destinosNacionales<<" "<<destinosInternacionales<<endl; //Se escribe en el archivo
     myfile.close(); //Se cierra el archivo
     
     
-    cadena=codigo+DELIMITADOR_CAMPOS+nombre+DELIMITADOR_CAMPOS+ciudad+DELIMITADOR_CAMPOS+pais+ DELIMITADOR_CAMPOS+convierteAStringF(superficie)+DELIMITADOR_CAMPOS+convierteAStringInt(cantidadTerminales)+DELIMITADOR_CAMPOS+convierteAStringInt(destinosNacionales)+DELIMITADOR_CAMPOS+convierteAStringInt(destinosInternacionales);
-    crearClaseTerminal(cadena);
+    
 }
 
 void quitarTerminal(){
@@ -130,7 +139,7 @@ void quitarTerminal(){
     myfile2.close(); //Se cierra el archivo nuevo
 
     listaTerminales.erase(listaTerminales.begin()+numero-1);//se borra la clase instanciada de terminal de la lista de terminales también
-}
+};
 
 void opciones(){
     while (numero != 4 )
@@ -161,20 +170,19 @@ void opciones(){
             opciones();
     }
 }
-}
+};
 
  /// lectura de viajes   
 void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
     string cadena,subcadena;
-    string nombre;
+    string viaje_Nuevo;
     string codigo_partida,codigo_destino;
     float horas_viaje;
     int costo_viaje;
     int posInicio,posFin;
    
-    vector<Viaje> listaDeViajes;// lista de todos los viajes en archivo
-    // int posLista=0;
-    //vector<string> lines; //Vector para guardar los datos del archivo
+   
+   
 
     ifstream viajes (ARCHIVO_DE_VIAJES, ios::in);
   //Se abre el archivo en modo lectura
@@ -206,9 +214,21 @@ void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
            
             horas_viaje=convierteAFloat(subcadena);
             
-            Viaje nombre=Viaje(codigo_partida,codigo_destino,costo_viaje,horas_viaje);
-           
-             listaDeViajes.push_back(nombre);
+            Viaje viaje_Nuevo=Viaje(codigo_partida,codigo_destino,costo_viaje,horas_viaje);
+
+// grabar en la lista que corresponde a la terminal
+            for(int v=0; v<listaTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
+                  if(listaTerminales[v].esMiCodigo(codigo_partida)){
+                    listaTerminales[v].addViaje(viaje_Nuevo);
+
+                  }
+                  else {
+                    CONTADOR_INCONSISTENCIAS=CONTADOR_INCONSISTENCIAS+1;
+                //   cout<<"punto de partida erroneo"<<endl;
+                  }
+              }   
+             
+             listaDeViajes.push_back(viaje_Nuevo);
             
         
           
@@ -217,12 +237,9 @@ void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
     }
     else cout<<"No se puede abrir el archivo";
 
-     for(int v=0; v<listaDeViajes.size(); v++){ //Se recorre el vector para mostrar los datos
-         listaDeViajes[v].imprimir();
-       
-     }
+    
 
-}
+};
 
 void lecturaYCargoDeTerminales() {
      string cadena,subcadena;
@@ -237,7 +254,7 @@ void lecturaYCargoDeTerminales() {
   
     if (myfile.is_open()){ //Si el archivo se abre
         while(getline(myfile,cadena)){ //y se pueda leer una linea
-            stringstream s;
+            stringstream ss;
             crearClaseTerminal(cadena);
             
         }
@@ -303,20 +320,31 @@ void crearClaseTerminal(string cadena){
            
             listaTerminales.push_back(nombreT);
 
-}     
+} ; 
+void imprimirViajes2(){
+     for(int v=0; v<listaTerminales.size(); v++){
+       
+        listaTerminales[v].imprimirViajes();
+     }   
+
+      
+}   ;
     
 
 
 void cabeceraDeTerminal(){
+      cout<<endl;
       cout<< "****    ****    ****    ****    ****    ****    ****    ****    ****    ****    ****    ****" <<endl;
       cout<< "codigo  nombre      ciudad      pais           sup   cantTerm      cantDestNac    cantDestInter" <<endl;
-}
+};
 void imprimirTerminales(){
+
 
      cabeceraDeTerminal();
     for(int v=0; v<listaTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
          listaTerminales[v].imprimir();
-}
+     }
+     cout<<endl;
  } ;
 
 
@@ -335,7 +363,7 @@ string convierteAStringF(float i){
     string str=ss.str();
     return str;
 
-} 
+} ;
 string convierteAStringInt(int i){
     stringstream ss;
     ss<<i;
