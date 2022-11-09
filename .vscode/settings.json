@@ -4,6 +4,11 @@
         "iosfwd": "cpp",
         "iostream": "cpp",
         "ostream": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "istream": "cpp",
+        "memory": "cpp",
+        "type_traits": "cpp",
+        "xlocnum": "cpp",
+        "xutility": "cpp"
     }
 }

@@ -28,6 +28,7 @@ public:
     void imprimir();
     bool esMiCodigo(string cod);
     void imprimirViajes();
+    vector<Viaje> getListadeViajes();
     
 };
 #endif // TERMINAL_H_INCLUDED

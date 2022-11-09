@@ -6,10 +6,13 @@
 #include<string.h>
 #include "terminal.h"
 #include "terminal.cpp"
+#include "grafo.h"
+#include "grafo.cpp"
 
 #include<sstream>
 
 #include "viaje.h"
+//#include "viaje.cpp"
 #define DELIMITADOR_CAMPOS " "
 #define ARCHIVO_DE_VIAJES "viajes.txt"
 #define ARCHIVO_DE_TERMINALES "terminales.txt"
@@ -36,16 +39,27 @@ vector<Viaje> listaDeViajes;// lista de todos los viajes en archivo
 int numero;
 int CONTADOR_INCONSISTENCIAS;
 vector<Terminal> listaTerminales;
+
+
 int main() {
     
     lecturaYCargoDeTerminales();
     lecturaDeArchivoViajes();
+     
+
     opciones();
+    
     imprimirTerminales();
     imprimirViajes2();
+    Grafo grafo=Grafo(listaTerminales);
+    grafo.imprimirTer();
+    grafo.cargarMatrices();
+    grafo.imprimirMatrices();
+    
     return 0;
 
 };
+
 
 void mostrarDatos(){ //Funcion para mostrar los datos del archivo
     string line;

@@ -5,6 +5,7 @@
 #include<string.h>
 using namespace std;
 
+
     vector<Viaje> listaDeMisViajes; 
     Terminal::Terminal(string _codigo,string _nombre,string _ciudad,string _pais,float _superficie,int _cantidadTerminales,int _destinosNacionales,int _destinosInternacionales){
         codigo=_codigo;
@@ -17,7 +18,9 @@ using namespace std;
         destinosInternacionales=_destinosInternacionales;
 
     };//constructor
-
+    vector<Viaje> Terminal :: getListadeViajes(){
+        return listaDeMisViajes;
+    } 
 
     string Terminal::get_codigo(){
         return codigo;
