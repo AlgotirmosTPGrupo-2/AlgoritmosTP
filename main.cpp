@@ -57,6 +57,8 @@ int main() {
     grafo.imprimirMatrices();
     
     grafo.imprimirMatrices();
+    grafo.floydWarshall();
+    grafo.imprimirMatrices();
     
     return 0;
 
