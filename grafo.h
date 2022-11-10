@@ -27,6 +27,7 @@ public:
     void cargarMatrices2();
     void imprimirMatrices();
     void imprimirTer();
+    int  cantDigitos( int numero);
     
 };
 #endif // GRAFO_H_INCLUDED

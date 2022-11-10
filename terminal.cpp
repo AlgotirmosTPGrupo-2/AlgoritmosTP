@@ -30,8 +30,10 @@ using namespace std;
     };
     void Terminal::imprimir(){
         string espacios;
+
         std::string strCod(espacios);
         strCod.insert(0, 5, ' ');
+        
         int repNombre= 12 - (nombre.length());
         std::string strNom(espacios);
         strNom.insert(0, repNombre, ' ');

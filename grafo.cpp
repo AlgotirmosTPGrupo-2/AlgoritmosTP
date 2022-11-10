@@ -3,7 +3,8 @@
 #include "terminal.h"
 
 #include "grafo.h"
-
+#include <stdio.h>
+#include <math.h>
 
 #include<string>
 #include<string.h>
@@ -31,30 +32,9 @@ for(int v=0; v<vectorTerminales.size(); v++){ //Se recorre el vector para mostra
          vectorTerminales[v].imprimir();
      }
      cout<<endl;
+}
 
-
-}   
 void Grafo::cargarMatrices(){
-    int v=vectorTerminales.size();
-    cout<<v<<endl;
-    bool coincidencia=false;
-
-    string cod_a_buscar;
-    int valor_a_asignar;
-    for (int primero = 0; primero < v;primero++)	{		
-       // cout<<"ingresa a primer for"<<primero<<endl;	
-	  for (int segundo=0; segundo< v;segundo++){
-
-            costo[segundo][primero] =INFINITO;
-        
-            recorrido[segundo][primero]=vectorTerminales[primero].get_codigo();
-                  
-                   
-        
-    }
-    }
-}  
-void Grafo::cargarMatrices2(){
     int v=vectorTerminales.size();
     cout<<v<<endl;
     bool coincidencia=false;
@@ -64,26 +44,32 @@ void Grafo::cargarMatrices2(){
     for (int primero = 0; primero < v;primero++)	{		
        
 	  for (int segundo=0; segundo< v;segundo++){
+            costo[segundo][primero] =INFINITO;
+        
+            recorrido[segundo][primero]=vectorTerminales[primero].get_codigo();
+        }
+    }
+    cargarMatrices2();
+}  
+void Grafo::cargarMatrices2(){
+    int v=vectorTerminales.size();
+    cout<<v<<endl;
+    string cod_a_buscar;
+    int valor_a_asignar;
+    for (int primero = 0; primero < v;primero++)	{		
+       
+	  for (int segundo=0; segundo< v;segundo++){
          
 		    for (int tercero=0; tercero< v;tercero++){	
-                 	
-                
-              
-              
-                if ( !coincidencia && (segundo<vectorTerminales[primero].getListadeViajes().size()) &&(vectorTerminales[primero].getListadeViajes()[segundo].get_codigo_destino()==vectorTerminales[tercero].get_codigo()))	{	
+            
+                if (  (segundo<vectorTerminales[primero].getListadeViajes().size()) &&(vectorTerminales[primero].getListadeViajes()[segundo].get_codigo_destino()==vectorTerminales[tercero].get_codigo()))	{	
                            
-                            coincidencia=true;
+                        
                             costo[primero][tercero]=vectorTerminales[primero].getListadeViajes()[segundo].get_costo_viaje();
                 } 
-                       
-                //cout<<  costo[primero][tercero]<<primero<<segundo<<tercero<<" "; 
-                   }    
             
-            coincidencia=false;
-            //cout<<endl;
+                   }    
            
-                    
-                   
         
     }
     }
@@ -92,12 +78,18 @@ void Grafo::cargarMatrices2(){
 
 void Grafo::imprimirMatrices(){
     int v=vectorTerminales.size();
+    string espacios;
+    int resultado;
   
     for (size_t i = 0; i < v; i++)
     {
         for (size_t j = 0; j < v; j++)
         {
-           cout<<costo[i][j]<<" ";
+        resultado =  cantDigitos(costo[i][j]);  
+        int repCosto= 6 - resultado;
+        std::string strCos(espacios);
+        strCos.insert(0, repCosto, ' ');     
+        cout<<strCos<<costo[i][j]<<" ";
         }
         cout<<endl;
     }
@@ -105,6 +97,7 @@ void Grafo::imprimirMatrices(){
     {
         for (size_t j = 0; j < v; j++)
         {
+
            cout<<recorrido[i][j]<<" ";
         }
         cout<<endl;
@@ -131,3 +124,12 @@ for(int i = 0; i < v; i++){ //n: cantidad de nodos
                     }
 //return distancias;
 }}}}
+
+int Grafo :: cantDigitos( int numero){
+    int cifras=1;
+    while (numero>=10){
+        numero=numero/10;
+        cifras++;
+    }
+    return cifras;
+}
