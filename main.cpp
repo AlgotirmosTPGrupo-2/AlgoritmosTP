@@ -55,6 +55,8 @@ int main() {
     grafo.imprimirTer();
     grafo.cargarMatrices();
     grafo.imprimirMatrices();
+    grafo.cargarMatrices2();
+    grafo.imprimirMatrices();
     
     return 0;
 

@@ -24,6 +24,7 @@ public:
     Grafo(vector <Terminal> _vectorTerminales);//constructor
     void floydWarshall();
     void cargarMatrices();
+    void cargarMatrices2();
     void imprimirMatrices();
     void imprimirTer();
     
