@@ -9,7 +9,7 @@
 #include<string.h>
 #include<vector>
 #include<algorithm>
-#define MEDIDA_primero 20 
+#define MEDIDA_primero 5 
 #define INFINITO 999999
 using namespace std;
 
@@ -33,50 +33,78 @@ for(int v=0; v<vectorTerminales.size(); v++){ //Se recorre el vector para mostra
      cout<<endl;
 
 
-}     
+}   
 void Grafo::cargarMatrices(){
     int v=vectorTerminales.size();
     cout<<v<<endl;
+    bool coincidencia=false;
 
     string cod_a_buscar;
     int valor_a_asignar;
     for (int primero = 0; primero < v;primero++)	{		
        // cout<<"ingresa a primer for"<<primero<<endl;	
 	  for (int segundo=0; segundo< v;segundo++){
-          // cout<<"ingresa a segundo for"<<segundo<<endl;
-           cod_a_buscar="COR";	
-          // Terminal prim=vectorTerminales[primero];
-          // prim.imprimir();cout<<endl;
-           //Viaje primV=prim.getListadeViajes()[segundo];
-           //primV.imprimir();cout<<endl;
 
-           //cod_a_buscar=vectorTerminales[primero].getListadeViajes()[segundo].get_codigo_destino();
-          valor_a_asignar=10;	
-          // valor_a_asignar=vectorTerminales[primero].getListadeViajes()[segundo].get_costo_viaje();
-           // cout<<cod_a_buscar<<valor_a_asignar<<endl;
-		    for (int tercero=0; tercero< v;tercero++){	
-                 	
-           // cout<<tercero<<"tercero"<<endl;
-              
-              // if( !vectorTerminales[primero].getListadeViajes().empty()){
-                       // valor_a_asignar=vectorTerminales[primero].getListadeViajes()[segundo].get_costo_viaje();
-                      //  cod_a_buscar=vectorTerminales[primero].getListadeViajes()[segundo].get_codigo_destino();
-                       // cout<<valor_a_asignar<<cod_a_buscar<<"afuera if"<<endl;
-                        if ( cod_a_buscar==vectorTerminales[tercero].get_codigo())	{	
-                           // cout<<valor_a_asignar<<cod_a_buscar<<"adentro if"<<endl;
-                            costo[primero][tercero]=valor_a_asignar;
-                            }     
-                         else    {  costo[primero][tercero]=INFINITO;} 
-                        //cout<<  costo[primero][tercero]<<endl; 
-                   //}    
-            }
+            costo[segundo][primero] =INFINITO;
+        
             recorrido[segundo][primero]=vectorTerminales[primero].get_codigo();
-                    
+                  
                    
         
     }
     }
-}
+}  
+// void Grafo::cargarMatrices(){
+//     int v=vectorTerminales.size();
+//     cout<<v<<endl;
+//     bool coincidencia=false;
+
+//     string cod_a_buscar;
+//     int valor_a_asignar;
+//     for (int primero = 0; primero < v;primero++)	{		
+//        // cout<<"ingresa a primer for"<<primero<<endl;	
+// 	  for (int segundo=0; segundo< v;segundo++){
+//           // cout<<"ingresa a segundo for"<<segundo<<endl;
+//            //cod_a_buscar="COR";	
+//           // Terminal prim=vectorTerminales[primero];
+//           // prim.imprimir();cout<<endl;
+//            //Viaje primV=prim.getListadeViajes()[segundo];
+//            //primV.imprimir();cout<<endl;
+
+//            //cod_a_buscar=vectorTerminales[primero].getListadeViajes()[segundo].get_codigo_destino();
+//           //valor_a_asignar=10;	
+//           // valor_a_asignar=vectorTerminales[primero].getListadeViajes()[segundo].get_costo_viaje();
+//            // cout<<cod_a_buscar<<valor_a_asignar<<endl;
+// 		    for (int tercero=0; tercero< v;tercero++){	
+                 	
+                
+              
+//               //if( vectorTerminales[primero].getListadeViajes().empty()){
+//                 //if (!coindidencia)    costo[primero][tercero]=INFINITO;
+//              // else{      
+//                        //valor_a_asignar=vectorTerminales[primero].getListadeViajes()[segundo].get_costo_viaje();
+//                       // cod_a_buscar=vectorTerminales[primero].getListadeViajes()[segundo].get_codigo_destino();
+//                        // cout<<valor_a_asignar<<cod_a_buscar<<"afuera if"<<endl;
+//                 if ( !coincidencia && (segundo<vectorTerminales[primero].getListadeViajes().size()) &&(vectorTerminales[primero].getListadeViajes()[segundo].get_codigo_destino()==vectorTerminales[tercero].get_codigo()))	{	
+                           
+//                             coincidencia=true;
+//                             costo[primero][tercero]=vectorTerminales[primero].getListadeViajes()[segundo].get_costo_viaje();
+//                 } //else if (!coincidencia){ costo[primero][tercero]=INFINITO;}
+               
+//                 //if ((vectorTerminales[primero].getListadeViajes().empty())||(segundo>=vectorTerminales[primero].getListadeViajes().size())) {costo[primero][tercero]=INFINITO; } 
+                       
+//                 cout<<  costo[primero][tercero]<<primero<<segundo<<tercero<<" "; 
+//                    }    
+            
+//             coincidencia=false;
+//             cout<<endl;
+//             recorrido[segundo][primero]=vectorTerminales[primero].get_codigo();
+                    
+                   
+        
+//     }
+//     }
+// }
           
 
 void Grafo::imprimirMatrices(){

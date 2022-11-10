@@ -1,6 +1,6 @@
 #ifndef GRAFO_H_INCLUDED
 #define GRAFO_H_INCLUDED
-#define MEDIDA_MATRIZ 20
+#define MEDIDA_MATRIZ 5
 #include <iostream>
 #include "terminal.h"
 #include<string>
