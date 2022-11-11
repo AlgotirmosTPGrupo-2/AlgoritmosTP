@@ -60,6 +60,7 @@ int main() {
     grafo.floydWarshall();
     grafo.imprimirMatrices();
     
+    cout<<grafo.costoViaje("EZE", "RET");
     return 0;
 
 };

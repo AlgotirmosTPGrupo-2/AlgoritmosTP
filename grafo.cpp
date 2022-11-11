@@ -133,3 +133,24 @@ int Grafo :: cantDigitos( int numero){
     }
     return cifras;
 }
+
+int Grafo :: costoViaje(string origen, string destino){
+        int posicionOrigen;
+        int posicionDestino;
+        string origenAControlar;
+        string destinoAControlar;
+        for (int i = 0; i < vectorTerminales.size(); i++)
+        {
+            origenAControlar=vectorTerminales[i].get_codigo();
+            destinoAControlar=vectorTerminales[i].get_codigo();
+           if(origen == origenAControlar){
+               posicionOrigen=i;
+           }
+           if(destino == destinoAControlar){
+               posicionDestino=i;
+           }
+        }
+        cout<<posicionOrigen<<endl;
+        cout<<posicionDestino<<endl;
+        return costo[posicionOrigen][posicionDestino];
+}

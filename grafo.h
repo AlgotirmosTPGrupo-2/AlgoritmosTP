@@ -28,6 +28,7 @@ public:
     void imprimirMatrices();
     void imprimirTer();
     int  cantDigitos( int numero);
+    int  costoViaje( string origen, string destino);  
     
 };
 #endif // GRAFO_H_INCLUDED
