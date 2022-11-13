@@ -1,13 +1,18 @@
 #include "terminal.h"
 #include "viaje.h"
+//#include "viaje.cpp"
 #include <iostream>
 #include<string>
 #include<string.h>
+#include <stdlib.h>
 using namespace std;
 
 
-    vector<Viaje> listaDeMisViajes; 
-    Terminal::Terminal(string _codigo,string _nombre,string _ciudad,string _pais,float _superficie,int _cantidadTerminales,int _destinosNacionales,int _destinosInternacionales){
+vector<Viaje> listaDeMisViajes; 
+
+ 
+    
+Terminal::Terminal(string _codigo,string _nombre,string _ciudad,string _pais,float _superficie,int _cantidadTerminales,int _destinosNacionales,int _destinosInternacionales){
         codigo=_codigo;
         nombre=_nombre;
         ciudad=_ciudad;

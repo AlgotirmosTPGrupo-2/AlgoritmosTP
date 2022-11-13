@@ -8,9 +8,12 @@
 #include "terminal.cpp"
 #include "grafo.h"
 #include "grafo.cpp"
-
+#include "lista.cpp"
+#include "lista.h"
+#include "nodo.h"
+#include"nodo.cpp"
 #include<sstream>
-#include<stdlib.h>
+//#include<stdlib.h>
 
 #include "viaje.h"
 //#include "viaje.cpp"
@@ -29,7 +32,7 @@ void quitarTerminal();
 int convierteAInt(string );
 float convierteAFloat(string );
 void lecturaDeArchivoViajes();
-void lecturaYCargoDeTerminales();
+void lecturaYCargoDeTerminales();///
 void imprimirTerminales();
 void cabeceraDeTerminal();
 void crearClaseTerminal(string);
@@ -37,15 +40,15 @@ string convierteAStringF(float);
 string convierteAStringInt(int);
 void imprimirViajes2();//IMPRIMIR VIAJES POR TERMINAL
 vector<Viaje> listaDeViajes;// lista de todos los viajes en archivo
-int numero;
+int numero,posicionEnLista;
 int CONTADOR_INCONSISTENCIAS;
 vector<Terminal> listaTerminales;
-vector< Terminal *> punterosDeTerminales;
-void cargaAListaDePunterosTerminales(Terminal);
+Lista lista_Terminales;
+
 
 
 int main() {
-    
+    posicionEnLista=1;
     lecturaYCargoDeTerminales();
     lecturaDeArchivoViajes();
      
@@ -121,11 +124,12 @@ void agregarTerminal(){
 
 
     cadena=codigo+DELIMITADOR_CAMPOS+nombre+DELIMITADOR_CAMPOS+ciudad+DELIMITADOR_CAMPOS+pais+ DELIMITADOR_CAMPOS+convierteAStringF(superficie)+DELIMITADOR_CAMPOS+convierteAStringInt(cantidadTerminales)+DELIMITADOR_CAMPOS+convierteAStringInt(destinosNacionales)+DELIMITADOR_CAMPOS+convierteAStringInt(destinosInternacionales);
+
     crearClaseTerminal(cadena);
 
     
     myfile<<codigo<<" "<<nombre<<" "<<ciudad<<" "<<pais<<" "<<superficie<<" "<<cantidadTerminales<<" "<<destinosNacionales<<" "<<destinosInternacionales<<endl; //Se escribe en el archivo
-    //cout<<codigo<<" "<<nombre<<" "<<ciudad<<" "<<pais<<" "<<superficie<<" "<<cantidadTerminales<<" "<<destinosNacionales<<" "<<destinosInternacionales<<endl; //Se escribe en el archivo
+    
     myfile.close(); //Se cierra el archivo
     
     
@@ -160,7 +164,7 @@ void quitarTerminal(){
         myfile2<<lines[i]<<endl;
     }
     myfile2.close(); //Se cierra el archivo nuevo
-
+    lista_Terminales.baja(numero);//arracnca de 1
     listaTerminales.erase(listaTerminales.begin()+numero-1);//se borra la clase instanciada de terminal de la lista de terminales también
 };
 
@@ -340,31 +344,23 @@ void crearClaseTerminal(string cadena){
             destinosInternacionales=convierteAInt(subcadena);
 
             Terminal nombreT=Terminal(codigo,nombre,ciudad,pais,superficie,cantidadTerminales, destinosNacionales,destinosInternacionales);
-            cargaAListaDePunterosTerminales(nombreT);
-            cout<<"cantidad de terminales punteros"<< punterosDeTerminales.size();
+            lista_Terminales.alta(nombreT,posicionEnLista);//carga en la lista
+            posicionEnLista+=1;
+           
   
             listaTerminales.push_back(nombreT);
 
 } ; 
-void cargaAListaDePunterosTerminales(Terminal t ){
-    Terminal *laTerminal;//puntero
-    cout<<sizeof(t)<<"direccion de terminal"<<endl;
-    laTerminal= &t;
-   
-    punterosDeTerminales.push_back(laTerminal);
-   
-  
-  
-    //funciona graba
-}
+
 void imprimirViajes2(){
     
-     for(int v=0; v<punterosDeTerminales.size(); v++){
-        cout<<punterosDeTerminales.size();
+     for(int v=0; v<listaTerminales.size(); v++){
+        
+        //lista_Terminales.consulta(v).imprimirViajes();
        // elemento= *punterosDeTerminales[v];
       //  elemento.imprimirViajes();
-        punterosDeTerminales[v]->imprimirViajes();
-      //  listaTerminales[v].imprimirViajes();
+       
+        listaTerminales[v].imprimirViajes();
      }   
 
       
@@ -380,27 +376,17 @@ void cabeceraDeTerminal(){
 void imprimirTerminales(){
     
 
- cout<<"cantidad de terminales punteros"<< punterosDeTerminales.size()<<endl;
-   // cout<<punterosDeTerminales<<endl;
-  // Terminal esta= *(punterosDeTerminales[0]);
-  // esta.imprimir();
-  cout<<(punterosDeTerminales[0])<<endl;  
-   (punterosDeTerminales[0]+168)->imprimir();
-  cout<<(punterosDeTerminales[0]+168)<<endl;
-  cout<<(punterosDeTerminales[0]+2)<<endl;
-  cout<<(punterosDeTerminales[0]+3)<<endl;
-   cout<<(punterosDeTerminales[0]+4)<<endl;
-
      cabeceraDeTerminal();
-     int siguiente=0;
-    for(int v=0; v<5; v++){ //Se recorre el vector para mostrar los datos
-         //listaTerminales[v].imprimir();
-       //*(punterosDeTerminales+v)->imprimir();
-       // cout<<algo<<"algo"<<endl;
-      //  algo.imprimir();
-        cout<<(punterosDeTerminales[0]+siguiente)<<endl;
-        siguiente+=1;
-       // cout<<(punterosDeTerminales[0]+v);
+     
+    
+    for(int v=0; v<listaTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
+       //lista_Terminales.consulta(v-1).imprimir();
+        listaTerminales[v].imprimir();
+      
+      
+      
+       
+       
      }
      cout<<endl;
  } ;
