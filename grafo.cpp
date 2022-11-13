@@ -5,11 +5,12 @@
 #include "grafo.h"
 #include <stdio.h>
 #include <math.h>
-
+#include<stdlib.h>
 #include<string>
 #include<string.h>
 #include<vector>
 #include<algorithm>
+
 #define MEDIDA_primero 5 
 #define INFINITO 999999
 using namespace std;
@@ -19,7 +20,9 @@ using namespace std;
 vector <Terminal> vectorTerminales;
 int costo[MEDIDA_primero][MEDIDA_primero];
 string recorrido[MEDIDA_primero][MEDIDA_primero];
-  
+int **puntero_matriz;
+int nfilas;
+int nCol;
 
 
     
@@ -27,11 +30,33 @@ Grafo::Grafo(vector <Terminal> _vectorTerminales){
         vectorTerminales=_vectorTerminales;
     };//constructor
 
+
 void Grafo :: imprimirTer(){ 
 for(int v=0; v<vectorTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
          vectorTerminales[v].imprimir();
      }
      cout<<endl;
+}
+
+//OJO TRATANDO DE HACER MATRIZ
+void Grafo::cargarMatTerminales(){
+    nfilas=2;
+    nCol=2;
+  //reservar memoria
+    puntero_matriz = new int*[nfilas];
+    for (int i=0;i<nfilas;i++){
+        puntero_matriz[i] = new int[nCol];
+       
+    }
+
+   for (int i=0;i<nfilas;i++){
+        for(int j=0;j<nCol;j++){
+            cout<<"que cagada";
+            cin>>*(*(puntero_matriz+i)+j);
+        }
+   }
+
+
 }
 
 void Grafo::cargarMatrices(){

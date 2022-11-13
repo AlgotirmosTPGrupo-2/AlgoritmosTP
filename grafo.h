@@ -15,7 +15,9 @@ private:
     vector <Terminal> vectorTerminales;
     int costo[MEDIDA_MATRIZ][MEDIDA_MATRIZ];
     string recorrido[MEDIDA_MATRIZ][MEDIDA_MATRIZ];
-    
+    int **puntero_matriz;
+    int nfilas;
+    int nCol;
     
    
 
@@ -29,6 +31,7 @@ public:
     void imprimirTer();
     int  cantDigitos( int numero);
     int  costoViaje( string origen, string destino);  
-    
+    ///
+    void cargarMatTerminales();
 };
 #endif // GRAFO_H_INCLUDED

@@ -10,6 +10,7 @@
 #include "grafo.cpp"
 
 #include<sstream>
+#include<stdlib.h>
 
 #include "viaje.h"
 //#include "viaje.cpp"
@@ -25,20 +26,22 @@ void mostrarDatos();
 void opciones();
 void agregarTerminal();
 void quitarTerminal();
-int convierteAInt(string i);
-float convierteAFloat(string i);
+int convierteAInt(string );
+float convierteAFloat(string );
 void lecturaDeArchivoViajes();
 void lecturaYCargoDeTerminales();
 void imprimirTerminales();
 void cabeceraDeTerminal();
-void crearClaseTerminal(string cadena);
-string convierteAStringF(float i);
-string convierteAStringInt(int i);
+void crearClaseTerminal(string);
+string convierteAStringF(float);
+string convierteAStringInt(int);
 void imprimirViajes2();//IMPRIMIR VIAJES POR TERMINAL
 vector<Viaje> listaDeViajes;// lista de todos los viajes en archivo
 int numero;
 int CONTADOR_INCONSISTENCIAS;
 vector<Terminal> listaTerminales;
+vector< Terminal *> punterosDeTerminales;
+void cargaAListaDePunterosTerminales(Terminal);
 
 
 int main() {
@@ -50,17 +53,18 @@ int main() {
     opciones();
     
     imprimirTerminales();
-    imprimirViajes2();
+
+    //imprimirViajes2();
     Grafo grafo=Grafo(listaTerminales);
-    grafo.imprimirTer();
+   // grafo.imprimirTer();
     grafo.cargarMatrices();
-    grafo.imprimirMatrices();
+   // grafo.imprimirMatrices();
     
-    grafo.imprimirMatrices();
+   // grafo.imprimirMatrices();
     grafo.floydWarshall();
-    grafo.imprimirMatrices();
+  //  grafo.imprimirMatrices();
     
-    cout<<grafo.costoViaje("EZE", "RET");
+    //cout<<grafo.costoViaje("EZE", "RET");
     return 0;
 
 };
@@ -336,14 +340,31 @@ void crearClaseTerminal(string cadena){
             destinosInternacionales=convierteAInt(subcadena);
 
             Terminal nombreT=Terminal(codigo,nombre,ciudad,pais,superficie,cantidadTerminales, destinosNacionales,destinosInternacionales);
-           
+            cargaAListaDePunterosTerminales(nombreT);
+            cout<<"cantidad de terminales punteros"<< punterosDeTerminales.size();
+  
             listaTerminales.push_back(nombreT);
 
 } ; 
+void cargaAListaDePunterosTerminales(Terminal t ){
+    Terminal *laTerminal;//puntero
+    cout<<sizeof(t)<<"direccion de terminal"<<endl;
+    laTerminal= &t;
+   
+    punterosDeTerminales.push_back(laTerminal);
+   
+  
+  
+    //funciona graba
+}
 void imprimirViajes2(){
-     for(int v=0; v<listaTerminales.size(); v++){
-       
-        listaTerminales[v].imprimirViajes();
+    
+     for(int v=0; v<punterosDeTerminales.size(); v++){
+        cout<<punterosDeTerminales.size();
+       // elemento= *punterosDeTerminales[v];
+      //  elemento.imprimirViajes();
+        punterosDeTerminales[v]->imprimirViajes();
+      //  listaTerminales[v].imprimirViajes();
      }   
 
       
@@ -357,11 +378,29 @@ void cabeceraDeTerminal(){
       cout<< "codigo  nombre      ciudad      pais           sup   cantTerm      cantDestNac    cantDestInter" <<endl;
 };
 void imprimirTerminales(){
+    
 
+ cout<<"cantidad de terminales punteros"<< punterosDeTerminales.size()<<endl;
+   // cout<<punterosDeTerminales<<endl;
+  // Terminal esta= *(punterosDeTerminales[0]);
+  // esta.imprimir();
+  cout<<(punterosDeTerminales[0])<<endl;  
+   (punterosDeTerminales[0]+168)->imprimir();
+  cout<<(punterosDeTerminales[0]+168)<<endl;
+  cout<<(punterosDeTerminales[0]+2)<<endl;
+  cout<<(punterosDeTerminales[0]+3)<<endl;
+   cout<<(punterosDeTerminales[0]+4)<<endl;
 
      cabeceraDeTerminal();
-    for(int v=0; v<listaTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
-         listaTerminales[v].imprimir();
+     int siguiente=0;
+    for(int v=0; v<5; v++){ //Se recorre el vector para mostrar los datos
+         //listaTerminales[v].imprimir();
+       //*(punterosDeTerminales+v)->imprimir();
+       // cout<<algo<<"algo"<<endl;
+      //  algo.imprimir();
+        cout<<(punterosDeTerminales[0]+siguiente)<<endl;
+        siguiente+=1;
+       // cout<<(punterosDeTerminales[0]+v);
      }
      cout<<endl;
  } ;
