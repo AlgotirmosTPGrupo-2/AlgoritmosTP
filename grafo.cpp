@@ -27,9 +27,21 @@ Grafo::Grafo(vector <Terminal> _vectorTerminales){
         vectorTerminales=_vectorTerminales;
     };//constructor
 
+
+void Grafo:: menuDeInicio(){
+    inicializarMatrices();
+    imprimirMatrices();
+    floydWarshall();
+    imprimirMatrices();
+    solicitarDatosAUsuario();
+
+
+
+}
 void Grafo :: imprimirTer(){ 
 for(int v=0; v<vectorTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
-         vectorTerminales[v].imprimir();
+        cout<<v+1<<". ";
+        vectorTerminales[v].imprimir();
      }
      cout<<endl;
 }
@@ -129,6 +141,21 @@ int Grafo :: cantDigitos( int numero){// para que la impresion salga prol
     }
     return cifras;
 }
+void Grafo :: solicitarDatosAUsuario(){
+    int origenT,destinoT;
+   
+    cout<< "\nTERMINALES DISPONIBLES, ELIJA ORIGEN Y DESTINO DEL VIAJE A CONSULTAR   "<<endl;
+
+    imprimirTer();
+
+    cout<<"INGRESE NUMERO DE TERMINAL DE ** ORIGEN ** ";
+    cin>>origenT;
+    cout<<"INGRESE NUMERO DE TERMINAL DE ** DESTINO ** ";
+    cin>>destinoT;
+
+    costoViaje(vectorTerminales[origenT-1].get_codigo(), vectorTerminales[destinoT-1].get_codigo());
+
+}
 
 void Grafo :: costoViaje(string origen, string destino){
         int posicionOrigen;
@@ -146,7 +173,8 @@ void Grafo :: costoViaje(string origen, string destino){
                posicionDestino=i;
            }
         }
-        cout<<"EL COSTO DEL VIAJE DE :"<< origen<<" HASTA "<<destino<<" ES DE $ "<<costo[posicionOrigen][posicionDestino]<<endl;
+      //  if (posicionOrigen==undefined ||posicionDestino==NULL){cout<<"ingreso de terminal inexistente "}
+    cout<<"\n EL COSTO DEL VIAJE DE :"<< origen<<" HASTA "<<destino<<" ES DE $ "<<costo[posicionOrigen][posicionDestino]<<endl;
         consultaRecorridoPorcosto(origen,destino);
        
 }
@@ -167,7 +195,7 @@ void Grafo:: consultaRecorridoPorcosto(string origen,string destino) {
 
     }
     detalle_de_viaje=origen+" , "+detalle_de_viaje;
-    cout<<"Siendo su recorrido el siguiente :   " <<detalle_de_viaje<<endl;
+    cout<<"Siendo su recorrido el siguiente :   " <<detalle_de_viaje<<"\n"<<endl;
 
 
 

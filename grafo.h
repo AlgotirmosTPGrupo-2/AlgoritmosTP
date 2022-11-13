@@ -31,6 +31,7 @@ public:
     void  costoViaje( string , string );  
     void consultaRecorridoPorcosto(string,string);
     int  dev_Posicion(string);
-    
+    void menuDeInicio();
+    void solicitarDatosAUsuario();
 };
 #endif // GRAFO_H_INCLUDED
