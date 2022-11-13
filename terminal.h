@@ -24,9 +24,9 @@ public:
 
 
     string get_codigo();
-    void addViaje(Viaje v);
+    void addViaje(Viaje);
     void imprimir();
-    bool esMiCodigo(string cod);
+    bool esMiCodigo(string);
     void imprimirViajes();
     vector<Viaje> getListadeViajes();
     

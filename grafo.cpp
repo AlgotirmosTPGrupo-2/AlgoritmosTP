@@ -34,13 +34,9 @@ for(int v=0; v<vectorTerminales.size(); v++){ //Se recorre el vector para mostra
      cout<<endl;
 }
 
-void Grafo::cargarMatrices(){
+void Grafo::inicializarMatrices(){
     int v=vectorTerminales.size();
-    cout<<v<<endl;
-    bool coincidencia=false;
-
-    string cod_a_buscar;
-    int valor_a_asignar;
+  
     for (int primero = 0; primero < v;primero++)	{		
        
 	  for (int segundo=0; segundo< v;segundo++){
@@ -51,7 +47,7 @@ void Grafo::cargarMatrices(){
     }
     cargarMatrices2();
 }  
-void Grafo::cargarMatrices2(){
+void Grafo::cargarMatrices2(){// carga los costos de inicio
     int v=vectorTerminales.size();
     cout<<v<<endl;
     string cod_a_buscar;
@@ -68,7 +64,7 @@ void Grafo::cargarMatrices2(){
                             costo[primero][tercero]=vectorTerminales[primero].getListadeViajes()[segundo].get_costo_viaje();
                 } 
             
-                   }    
+                  }    
            
         
     }
@@ -125,7 +121,7 @@ for(int i = 0; i < v; i++){ //n: cantidad de nodos
 //return distancias;
 }}}}
 
-int Grafo :: cantDigitos( int numero){
+int Grafo :: cantDigitos( int numero){// para que la impresion salga prol
     int cifras=1;
     while (numero>=10){
         numero=numero/10;
@@ -134,23 +130,56 @@ int Grafo :: cantDigitos( int numero){
     return cifras;
 }
 
-int Grafo :: costoViaje(string origen, string destino){
+void Grafo :: costoViaje(string origen, string destino){
         int posicionOrigen;
         int posicionDestino;
-        string origenAControlar;
-        string destinoAControlar;
+        string origenACoincidir;
+        string destinoACoincidir;
         for (int i = 0; i < vectorTerminales.size(); i++)
         {
-            origenAControlar=vectorTerminales[i].get_codigo();
-            destinoAControlar=vectorTerminales[i].get_codigo();
-           if(origen == origenAControlar){
+            origenACoincidir=vectorTerminales[i].get_codigo();
+            destinoACoincidir=vectorTerminales[i].get_codigo();
+           if(origen == origenACoincidir){
                posicionOrigen=i;
            }
-           if(destino == destinoAControlar){
+           if(destino == destinoACoincidir){
                posicionDestino=i;
            }
         }
-        cout<<posicionOrigen<<endl;
-        cout<<posicionDestino<<endl;
-        return costo[posicionOrigen][posicionDestino];
+        cout<<"EL COSTO DEL VIAJE DE :"<< origen<<" HASTA "<<destino<<" ES DE $ "<<costo[posicionOrigen][posicionDestino]<<endl;
+        consultaRecorridoPorcosto(origen,destino);
+       
+}
+
+void Grafo:: consultaRecorridoPorcosto(string origen,string destino) {
+    
+    string detalle_de_viaje=""+destino;
+    int posOrigen=dev_Posicion(origen);
+    int posDestino=dev_Posicion(destino);
+    int nuevoDestino=0;
+    while (recorrido[posOrigen][posDestino] !=destino){
+        destino=recorrido[posOrigen][posDestino];
+        detalle_de_viaje=destino+" , "+detalle_de_viaje;
+        posDestino=dev_Posicion(recorrido[posOrigen][posDestino]);
+
+        
+
+
+    }
+    detalle_de_viaje=origen+" , "+detalle_de_viaje;
+    cout<<"Siendo su recorrido el siguiente :   " <<detalle_de_viaje<<endl;
+
+
+
+
+}
+int  Grafo:: dev_Posicion(string codigo){
+    int respuesta =99;
+    for (int i = 0; i < vectorTerminales.size(); i++)
+        {
+          if(vectorTerminales[i].get_codigo()==codigo){
+            respuesta=i;
+          } 
+}
+return respuesta;
 }

@@ -21,14 +21,16 @@ private:
 
 public:
     
-    Grafo(vector <Terminal> _vectorTerminales);//constructor
+    Grafo(vector <Terminal>);//constructor
     void floydWarshall();
-    void cargarMatrices();
+    void inicializarMatrices();
     void cargarMatrices2();
     void imprimirMatrices();
     void imprimirTer();
-    int  cantDigitos( int numero);
-    int  costoViaje( string origen, string destino);  
+    int  cantDigitos( int );
+    void  costoViaje( string , string );  
+    void consultaRecorridoPorcosto(string,string);
+    int  dev_Posicion(string);
     
 };
 #endif // GRAFO_H_INCLUDED

@@ -53,14 +53,13 @@ int main() {
     imprimirViajes2();
     Grafo grafo=Grafo(listaTerminales);
     grafo.imprimirTer();
-    grafo.cargarMatrices();
+    grafo.inicializarMatrices();
     grafo.imprimirMatrices();
     
     grafo.imprimirMatrices();
     grafo.floydWarshall();
     grafo.imprimirMatrices();
-    
-    cout<<grafo.costoViaje("EZE", "RET");
+    grafo.costoViaje("EZE", "RET");
     return 0;
 
 };
