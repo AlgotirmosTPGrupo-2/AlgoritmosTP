@@ -28,12 +28,15 @@ public:
     void imprimirMatrices();
     void imprimirTer();
     int  cantDigitos( int );
-    void  costoViaje( string , string );  
+    void costoViaje( string , string );  
     void consultaRecorridoPorcosto(string,string);
     void consultaRecorridoPorCosto2(string,string);
     int  dev_Posicion(string);
     void menuDeInicio();
     void solicitarDatosAUsuario();
-    void invertirVector (vector <string>);
+    void inicializarMatricesHoras();
+    void cargarMatrices3();
+    void imprimirMatricesHoras();
+    void floydWarshallHoras();
 };
 #endif // GRAFO_H_INCLUDED

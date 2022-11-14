@@ -5,7 +5,7 @@
 #include "grafo.h"
 #include <stdio.h>
 #include <math.h>
-
+#include<iomanip>
 #include<string>
 #include<string.h>
 #include<vector>
@@ -19,6 +19,7 @@ using namespace std;
 vector <Terminal> vectorTerminales;
 int costo[MEDIDA_primero][MEDIDA_primero];
 string recorrido[MEDIDA_primero][MEDIDA_primero];
+float horas_viaje[MEDIDA_primero][MEDIDA_primero];
   
 
 
@@ -89,9 +90,9 @@ void Grafo::imprimirMatrices(){
     string espacios;
     int resultado;
   
-    for (size_t i = 0; i < v; i++)
+    for (int i = 0; i < v; i++)
     {
-        for (size_t j = 0; j < v; j++)
+        for (int j = 0; j < v; j++)
         {
         resultado =  cantDigitos(costo[i][j]);  
         int repCosto= 6 - resultado;
@@ -101,9 +102,9 @@ void Grafo::imprimirMatrices(){
         }
         cout<<endl;
     }
-      for (size_t i = 0; i < v; i++)
+      for (int i = 0; i < v; i++)
     {
-        for (size_t j = 0; j < v; j++)
+        for (int j = 0; j < v; j++)
         {
 
            cout<<recorrido[i][j]<<" ";
@@ -249,3 +250,86 @@ void Grafo:: consultaRecorridoPorCosto2(string origen,string destino) {
         unVector.push_back(aux);
     }
 } */
+
+
+void Grafo::inicializarMatricesHoras(){
+    int v=vectorTerminales.size();
+  
+    for (int primero = 0; primero < v;primero++)	{		
+       
+	  for (int segundo=0; segundo< v;segundo++){
+            horas_viaje[segundo][primero] =INFINITO;
+        
+            recorrido[segundo][primero]=vectorTerminales[primero].get_codigo();
+        }
+    }
+    cargarMatrices3();
+}  
+
+void Grafo::cargarMatrices3(){// carga los costos de inicio
+    int v=vectorTerminales.size();
+    cout<<v<<endl;
+    string cod_a_buscar;
+    float valor_a_asignar;
+    for (int primero = 0; primero < v;primero++)	{		
+       
+	  for (int segundo=0; segundo< v;segundo++){
+         
+		    for (int tercero=0; tercero< v;tercero++){	
+            
+                if ((segundo<vectorTerminales[primero].getListadeViajes().size()) 
+                    &&(vectorTerminales[primero].getListadeViajes()[segundo].get_codigo_destino()
+                    ==vectorTerminales[tercero].get_codigo()))	{	     
+                   
+                    horas_viaje[primero][tercero]=vectorTerminales[primero].getListadeViajes()[segundo].get_horas_viaje();
+                } 
+            
+            }
+        }
+    }
+}
+
+void Grafo::imprimirMatricesHoras(){
+    int v=vectorTerminales.size();
+    string espacios;
+    int resultado;
+  
+    for (int i = 0; i < v; i++)
+    {
+        for (int j = 0; j < v; j++)
+        {
+            resultado =  cantDigitos(horas_viaje[i][j]);  
+            int repHoras= 6 - resultado;
+            std::string strHoras(espacios);
+            strHoras.insert(0, repHoras, ' ');     
+            cout<<strHoras<<fixed<<setprecision(2)<<horas_viaje[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+      for (int i = 0; i < v; i++)
+    {
+        for (int j = 0; j < v; j++)
+        {
+
+           cout<<recorrido[i][j]<<"  ";
+        }
+        cout<<endl;
+    }
+};         
+
+
+void Grafo :: floydWarshallHoras(){
+    int v=vectorTerminales.size();
+  
+    for(int i = 0; i < v; i++){ //n: cantidad de nodos
+        horas_viaje[i][i] = 0;
+        for(int k = 0; k < v; k++)
+            for(int i = 0; i < v; i++){
+             for(int j = 0; j <v; j++){
+                int dt = horas_viaje[i][k] + horas_viaje[k][j];
+                if(dt < horas_viaje[i][j]){
+                    horas_viaje[i][j] = dt; 
+                    recorrido[i][j]=vectorTerminales[k].get_codigo();//VERIFICAR
+                    }
+//return distancias;
+}}}}
