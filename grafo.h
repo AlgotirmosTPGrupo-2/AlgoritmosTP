@@ -30,8 +30,10 @@ public:
     int  cantDigitos( int );
     void  costoViaje( string , string );  
     void consultaRecorridoPorcosto(string,string);
+    void consultaRecorridoPorCosto2(string,string);
     int  dev_Posicion(string);
     void menuDeInicio();
     void solicitarDatosAUsuario();
+    void invertirVector (vector <string>);
 };
 #endif // GRAFO_H_INCLUDED

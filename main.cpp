@@ -53,7 +53,7 @@ int main() {
     imprimirViajes2();
     Grafo grafo=Grafo(listaTerminales);
     grafo.menuDeInicio();
-   
+    
     return 0;
 
 };
@@ -160,7 +160,6 @@ void opciones(){
     cout << "1. Mostrar todas las terminales" << endl;
     cout << "2. Agregar una terminal" << endl;
     cout << "3. Eliminar una terminal" << endl;
-    cout << "4. Consultar Viaje      " <<endl;// falta colocar opcion en switch(grafo)
     cout << "4. Salir" << endl;
 
 

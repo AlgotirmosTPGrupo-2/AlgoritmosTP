@@ -176,6 +176,7 @@ void Grafo :: costoViaje(string origen, string destino){
       //  if (posicionOrigen==undefined ||posicionDestino==NULL){cout<<"ingreso de terminal inexistente "}
     cout<<"\n EL COSTO DEL VIAJE DE :"<< origen<<" HASTA "<<destino<<" ES DE $ "<<costo[posicionOrigen][posicionDestino]<<endl;
         consultaRecorridoPorcosto(origen,destino);
+        consultaRecorridoPorCosto2(origen,destino);
        
 }
 
@@ -189,16 +190,9 @@ void Grafo:: consultaRecorridoPorcosto(string origen,string destino) {
         destino=recorrido[posOrigen][posDestino];
         detalle_de_viaje=destino+" , "+detalle_de_viaje;
         posDestino=dev_Posicion(recorrido[posOrigen][posDestino]);
-
-        
-
-
     }
     detalle_de_viaje=origen+" , "+detalle_de_viaje;
-    cout<<"Siendo su recorrido el siguiente :   " <<detalle_de_viaje<<"\n"<<endl;
-
-
-
+    cout<<"\n Siendo su recorrido el siguiente:   " <<detalle_de_viaje<<"\n"<<endl;
 
 }
 int  Grafo:: dev_Posicion(string codigo){
@@ -211,3 +205,47 @@ int  Grafo:: dev_Posicion(string codigo){
 }
 return respuesta;
 }
+
+void Grafo:: consultaRecorridoPorCosto2(string origen,string destino) {
+    vector <string> detalleDeViaje;
+    vector <int> vectorCostoTramo;
+    //string detalle_de_viaje=""+destino;
+    int posOrigen=dev_Posicion(origen);
+    int posDestino=dev_Posicion(destino);
+    int nuevoDestino=0, costoTramo;
+    detalleDeViaje.push_back(destino);
+    while (recorrido[posOrigen][posDestino] !=destino){
+        destino=recorrido[posOrigen][posDestino];
+        detalleDeViaje.push_back(destino);
+        costoTramo = costo[dev_Posicion(destino)][posDestino];
+        vectorCostoTramo.push_back(costoTramo);
+        //detalle_de_viaje= destino+" , "+detalle_de_viaje;
+       
+        posDestino=dev_Posicion(recorrido[posOrigen][posDestino]);
+
+    }
+    detalleDeViaje.push_back(origen);
+    costoTramo = costo[dev_Posicion(origen)][posDestino];
+    vectorCostoTramo.push_back(costoTramo);
+    cout<< " ** El costo por tramo es: "<<endl;
+    for(int i=0; i<vectorCostoTramo.size();i++){
+        //cout<<"    "<<detalleDeViaje[i] << " - " << detalleDeViaje[i+1] << " $ " << vectorCostoTramo[i]  <<endl;
+        string detalle= "    " + detalleDeViaje[i+1] + " - " + detalleDeViaje[i] + " $ " + to_string(vectorCostoTramo[i]);
+        cout<< detalle ;
+    }
+    
+    //detalle_de_viaje=origen+" , "+detalle_de_viaje;
+    //cout<<"Siendo su recorrido el siguiente :   " <<detalle_de_viaje<<"\n"<<endl;
+
+}
+
+/* void::Grafo invertirVector (vector <string> unVector){
+    vector <string> vectorInvertido;
+    vectorInvertido=unVector;
+    string aux;
+    for(int i=unVector.size()-1; i=0; i--){
+        aux = unVector[i];
+        vectorInvertido.pop_back();
+        unVector.push_back(aux);
+    }
+} */
