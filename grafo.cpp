@@ -9,7 +9,7 @@
 #include<string.h>
 #include<vector>
 #include<algorithm>
-#define MEDIDA_primero 5 
+#define MEDIDA_primero 10 
 #define INFINITO 999999,9
 
 #define TERMINALES_CANTIDAD vectorTerminales.size()
@@ -133,7 +133,7 @@ for(int i = 0; i < v; i++){ //n: cantidad de nodos
         for(int k = 0; k < v; k++)
             for(int i = 0; i < v; i++){
              for(int j = 0; j <v; j++){
-                int dt = costo[i][k] + costo[k][j];
+                float dt = costo[i][k] + costo[k][j];
                 if(dt < costo[i][j]){
                     costo[i][j] = dt; 
                     recorrido[i][j]=vectorTerminales[k].get_codigo();//VERIFICAR
@@ -165,8 +165,9 @@ void Grafo :: solicitarDatosAUsuario(){
 
    
     cargarMatrices2(eleccion);
-    //imprimirMatrices(eleccion);
+   // imprimirMatrices(eleccion);
     floydWarshall();
+ //   imprimirMatrices(eleccion);
    
     costoViaje(vectorTerminales[origenT-1].get_codigo(), vectorTerminales[destinoT-1].get_codigo(),eleccion);
     cout<<"MATRICES CONSULTADAS"<<endl; 
@@ -180,6 +181,9 @@ void Grafo :: costoViaje(string origen, string destino,int eleccion){
         int posicionDestino;
         string origenACoincidir;
         string destinoACoincidir;
+        string mensaje;
+        if(eleccion==1){mensaje=" PESOS ";}
+        else{mensaje=" HORAS ";}
         for (int i = 0; i < vectorTerminales.size(); i++)
         {
             origenACoincidir=vectorTerminales[i].get_codigo();
@@ -192,7 +196,7 @@ void Grafo :: costoViaje(string origen, string destino,int eleccion){
            }
         }
       //  if (posicionOrigen==undefined ||posicionDestino==NULL){cout<<"ingreso de terminal inexistente "}
-    cout<<"\nEL COSTO DEL VIAJE DE :"<< origen<<" HASTA "<<destino<<" ES DE $ "<<costo[posicionOrigen][posicionDestino]<<endl;
+    cout<<"\nEL RECORRIDO RECOMENDADO PARA SU VIAJE DE :"<< origen<<" HASTA "<<destino<<" ES DE "<<costo[posicionOrigen][posicionDestino]<<mensaje<<endl;
       consultaRecorridoPorCosto(origen,destino);
        
 }
