@@ -22,7 +22,7 @@
 using namespace std;
 
 void mostrarDatos();
-void opciones();
+void opciones(Grafo);
 void agregarTerminal();
 void quitarTerminal();
 int convierteAInt(string i);
@@ -46,17 +46,10 @@ int main() {
     lecturaYCargoDeTerminales();
     lecturaDeArchivoViajes();
      
-
-    opciones();
-    
-    imprimirTerminales();
-    imprimirViajes2();
     Grafo grafo=Grafo(listaTerminales);
-    grafo.menuDeInicio();
-
-    grafo.inicializarMatricesHoras();
-    grafo.cargarMatrices3();
-    grafo.imprimirMatricesHoras();
+    opciones(grafo);
+    
+      
     
     return 0;
 
@@ -157,15 +150,15 @@ void quitarTerminal(){
     listaTerminales.erase(listaTerminales.begin()+numero-1);//se borra la clase instanciada de terminal de la lista de terminales también
 };
 
-void opciones(){
-    while (numero != 4 )
+void opciones(Grafo grafo){
+    while (numero != 5 )
     {
     cout << "\n\nMenu de Opciones" << endl;
     cout << "1. Mostrar todas las terminales" << endl;
     cout << "2. Agregar una terminal" << endl;
     cout << "3. Eliminar una terminal" << endl;
     cout << "4. Consultar Viaje      " <<endl;// falta colocar opcion en switch(grafo)
-    cout << "4. Salir" << endl;
+    cout << "5. Salir" << endl;
 
 
     cout<<"Ingrese un numero entre 1 y 4 segun desee: ";
@@ -174,17 +167,33 @@ void opciones(){
 
     switch(numero){
         case 1:
-            mostrarDatos(); break;
+            imprimirTerminales();
+
+            imprimirViajes2();
+            
+            //mostrarDatos();
+             break;
         case 2:
-            agregarTerminal(); break;
+            agregarTerminal();
+            cout<<"presione una tecla para continuar" <<endl;
+            cin.get();
+           
+            break;
         case 3:
-            quitarTerminal(); break;
+            quitarTerminal();
+           
+             break;
         case 4:
-            cout << "Adios!" << endl; break;
+           
+            grafo.menuDeInicio();
+            
+            break;
+        case 5:
+            cout << "Adios!" << endl; break;    
 
         default:
             cout<<"Opcion incorrecta";
-            opciones();
+            opciones(grafo);
     }
 }
 };

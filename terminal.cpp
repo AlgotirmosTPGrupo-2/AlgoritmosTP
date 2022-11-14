@@ -54,6 +54,7 @@ using namespace std;
     };
     void Terminal::imprimirViajes(){
         if (listaDeMisViajes.size()>0){
+        cout<<endl;    
         cout<<"***** TERMINAL  : "<<codigo<<" ******   DESTINOS DISPONIBLES ****** "<<endl;
         for(int v=0; v<listaDeMisViajes.size(); v++){
              

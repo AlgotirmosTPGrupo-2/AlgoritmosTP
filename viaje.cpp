@@ -29,6 +29,7 @@ using namespace std;
         return horas_viaje;
     };
     void Viaje::imprimir(){
+        //cout<<endl; cout<<endl;
         cout<<"origen :  "<<codigo_partida<< " destino :  "<< codigo_destino<<"  costo : "<<costo_viaje<<"  horas de viaje : "<< horas_viaje<<endl;
     };
 
