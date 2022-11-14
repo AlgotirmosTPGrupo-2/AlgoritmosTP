@@ -33,5 +33,6 @@ public:
     int  dev_Posicion(string);
     void menuDeInicio();
     void solicitarDatosAUsuario();
+    void liberar();
 };
 #endif // GRAFO_H_INCLUDED

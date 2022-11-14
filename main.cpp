@@ -186,6 +186,7 @@ void opciones(Grafo grafo){
         case 4:
            
             grafo.menuDeInicio();
+            grafo.liberar();
             
             break;
         case 5:

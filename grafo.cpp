@@ -9,6 +9,7 @@
 #include<string.h>
 #include<vector>
 #include<algorithm>
+#include<stdlib.h>
 #define MEDIDA_primero 10 
 #define INFINITO 999999,9
 
@@ -18,14 +19,20 @@ using namespace std;
 
 
 vector <Terminal> vectorTerminales;
-float costo[MEDIDA_primero][MEDIDA_primero];
-string recorrido[MEDIDA_primero][MEDIDA_primero];
+//float costo[MEDIDA_primero][MEDIDA_primero];
+//string recorrido[MEDIDA_primero][MEDIDA_primero];
   
 
 
     
 Grafo::Grafo(vector <Terminal> _vectorTerminales){
         vectorTerminales=_vectorTerminales;
+        float **costo=new float*[TERMINALES_CANTIDAD];
+        string **recorrido=new string*[TERMINALES_CANTIDAD];
+        for(int i=0;i<TERMINALES_CANTIDAD;i++){
+            costo[i]=new float[TERMINALES_CANTIDAD];
+            recorrido[i]=new string[TERMINALES_CANTIDAD];
+        }
     };//constructor
 
 
@@ -81,6 +88,15 @@ void Grafo::cargarMatrices2(int eleccion){// carga los costos de inicio
                                 costo[primero][tercero]=vectorTerminales[primero].getListadeViajes()[segundo].get_horas_viaje();
                     }   }}}  }
 
+  } 
+  void Grafo::liberar(){
+    for (int primero = 0; primero < TERMINALES_CANTIDAD;primero++){
+        delete[] costo[primero];
+        delete[] recorrido[primero];
+
+    }
+    delete[] costo;
+    delete[] recorrido; 
   }                
     
 
