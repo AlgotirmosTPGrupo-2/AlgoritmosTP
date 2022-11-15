@@ -10,6 +10,7 @@
 #include "grafo.cpp"
 
 #include<sstream>
+#include <bits/stdc++.h>
 
 #include "viaje.h"
 //#include "viaje.cpp"
@@ -32,6 +33,10 @@ void lecturaYCargoDeTerminales();
 void imprimirTerminales();
 void cabeceraDeTerminal();
 void crearClaseTerminal(string cadena);
+void ordenar();
+void ordenarEntre(int desde, int hasta);
+int acomodar(int,int,Terminal);
+void imprimirListaTerminalesOrdenada();
 string convierteAStringF(float i);
 string convierteAStringInt(int i);
 void imprimirViajes2();//IMPRIMIR VIAJES POR TERMINAL
@@ -45,7 +50,8 @@ int main() {
     
     lecturaYCargoDeTerminales();
     lecturaDeArchivoViajes();
-     
+    ordenar();
+
     Grafo grafo=Grafo(listaTerminales);
     opciones(grafo);
     
@@ -407,4 +413,37 @@ float convierteAFloat(string i){
     return num;
 };
 
+void ordenar (){
+     ordenarEntre(0, TERMINALES_CANTIDAD-1);
+};
 
+void ordenarEntre (int desde, int hasta){
+    if (desde<hasta){
+        Terminal p = listaTerminales[desde];  //p es el pivot, un elemento cualquiera del vector
+        int medio = acomodar(desde, hasta , p);  
+        swap(desde, medio);
+        ordenarEntre( desde, medio-1);
+        ordenarEntre(medio+1,hasta);
+    }
+};
+
+int acomodar(int desde, int hasta, Terminal p){
+    int i = desde, j = hasta;
+    while(i<j){
+        while(listaTerminales[i].get_codigo()<=p.get_codigo() && i<j)
+            {i++;}
+        while(listaTerminales[j].get_codigo()>p.get_codigo() && i<j)
+            {j--;}
+        if(i<j)
+            {std::swap(i,j);}
+    }
+    imprimirListaTerminalesOrdenada();
+    return (listaTerminales[i].get_codigo() < p.get_codigo() ? i: i-1 );
+};
+
+void imprimirListaTerminalesOrdenada(){
+    cout<< " ** MOSTRANDO LA LISTA DE TERMINALES ORDENADA ** "<<endl;
+    for(int i=0; i< listaTerminales.size();i++){
+        cout<<listaTerminales[i].get_codigo();
+    }
+}
