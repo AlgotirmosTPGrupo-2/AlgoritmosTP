@@ -8,14 +8,16 @@
 #include "terminal.cpp"
 #include "grafo.h"
 #include "grafo.cpp"
-
 #include<sstream>
-
+#include <bits/stdc++.h>
 #include "viaje.h"
-//#include "viaje.cpp"
 #define DELIMITADOR_CAMPOS " "
 #define ARCHIVO_DE_VIAJES "viajes.txt"
 #define ARCHIVO_DE_TERMINALES "terminales.txt"
+#define GET_CODIGO get_codigo()
+#define GET_SUP get_superficie()
+
+
 
 
 
@@ -32,6 +34,20 @@ void lecturaYCargoDeTerminales();
 void imprimirTerminales();
 void cabeceraDeTerminal();
 void crearClaseTerminal(string cadena);
+//ordenamiento string
+void ordenar(int);
+void ordenarEntre(int,int desde, int hasta);
+int acomodar(int,int,int,Terminal);
+void imprimirListaTerminalesOrdenada(int);
+string retornar_opcionS(int,Terminal);
+
+//ordenamiento float
+void ordenarF(int);
+void ordenarEntreF(int,int desde, int hasta);
+int acomodarF(int,int,int,Terminal);
+void imprimirListaTerminalesOrdenadaF(int);
+float retornar_opcionF(int,Terminal );
+
 string convierteAStringF(float i);
 string convierteAStringInt(int i);
 void imprimirViajes2();//IMPRIMIR VIAJES POR TERMINAL
@@ -41,13 +57,18 @@ int CONTADOR_INCONSISTENCIAS;
 vector<Terminal> listaTerminales;
 
 
+
+
+
 int main() {
-    
+  
     lecturaYCargoDeTerminales();
     lecturaDeArchivoViajes();
-     
-    Grafo grafo=Grafo(listaTerminales);
-    opciones(grafo);
+    //ordenar();
+
+   Grafo grafo=Grafo(listaTerminales);
+   opciones(grafo);
+    
     
       
     
@@ -161,7 +182,7 @@ void opciones(Grafo grafo){
     cout << "5. Salir" << endl;
 
 
-    cout<<"Ingrese un numero entre 1 y 4 segun desee: ";
+    cout<<"Ingrese un numero entre 1 y 5 segun desee: ";
     cin>>numero;
 
 
@@ -169,7 +190,7 @@ void opciones(Grafo grafo){
         case 1:
             imprimirTerminales();
 
-            imprimirViajes2();
+            //imprimirViajes2();
             
             //mostrarDatos();
              break;
@@ -361,16 +382,30 @@ void imprimirViajes2(){
 
 void cabeceraDeTerminal(){
       cout<<endl;
+
+
       cout<< "****    ****    ****    ****    ****    ****    ****    ****    ****    ****    ****    ****" <<endl;
       cout<< "codigo  nombre      ciudad      pais           sup   cantTerm      cantDestNac    cantDestInter" <<endl;
 };
 void imprimirTerminales(){
+    int op_orden;
+   
+    cout<< "\nSELECCIONE LA OPCION DE ORDENAMIENTO PARA LA VISUALIZACION DE TERMINALES   "<<endl;
 
+   
+    cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2. NOMBRE \n 3. CIUDAD  \n 4. PAIS  \n ";
+    cin>>op_orden;
+    // //if(op_orden==5){
+    //     ordenarF(op_orden);
+    
+    //     imprimirListaTerminalesOrdenadaF(op_orden);
 
-     cabeceraDeTerminal();
-    for(int v=0; v<listaTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
-         listaTerminales[v].imprimir();
-     }
+    // }else {
+    ordenar(op_orden);
+    
+    imprimirListaTerminalesOrdenada(op_orden);
+    
+    
      cout<<endl;
  } ;
 
@@ -406,5 +441,111 @@ float convierteAFloat(string i){
     ss>>num;
     return num;
 };
+/// COMIENZA CODIGO DE ORDENAMIENTO     
+void ordenar (int op_orden){
+     ordenarEntre(op_orden,0, listaTerminales.size()-1);
+};
+
+void ordenarEntre (int op_orden,int desde, int hasta){
+    if (desde<hasta){
+        Terminal p = listaTerminales[desde];  //p es el pivot, un elemento cualquiera del vector
+        int medio = acomodar(op_orden,desde, hasta , p);  
+        swap(listaTerminales[desde],listaTerminales[medio]);
+        ordenarEntre( op_orden,desde, medio-1);
+        ordenarEntre(op_orden,medio+1,hasta);
+    }
+};
+ float retornar_float(int op_orden ,Terminal t){
+    return t.GET_SUP;
+ };
+
+string retornar_opcionS(int op_orden ,Terminal t){
+ 
+    
+    switch(op_orden){
+          case 1:
+             return t.get_codigo();
+            
+              break;
+          case 2:
+               return t.get_nombre();
+           
+            break;
+        case 3:
+             return t.get_ciudad();
+           
+             break;
+        case 4:
+             return t.get_pais();
+        
+        default:
+            cout<<"   otra Opcion incorrecta";
+           // opciones(grafo);
+    }
+}
 
 
+int acomodar(int op_orden,int desde, int hasta, Terminal p){
+ 
+    int i = desde, j = hasta;
+    while(i<j){
+
+        while(retornar_opcionS(op_orden,listaTerminales[i])<=retornar_opcionS(op_orden,p )&& i<j)
+            {i++;}
+        while(retornar_opcionS(op_orden,listaTerminales[j])>retornar_opcionS(op_orden,p) && i<j)
+            {j--;}
+        if(i<j)
+            {swap(listaTerminales[i],listaTerminales[j]);}
+    }
+   // imprimirListaTerminalesOrdenada();
+    return (retornar_opcionS(op_orden,listaTerminales[i]) < retornar_opcionS(op_orden,p) ? i: i-1 );
+};
+
+void imprimirListaTerminalesOrdenada(int op_orden){
+
+    cout<< " ** MOSTRANDO LA LISTA DE TERMINALES ORDENADA ** "<<endl;
+    for(int i=0; i< listaTerminales.size();i++){
+        cout<<i+1<<" * " <<listaTerminales[i].get_codigo()<<" - "<<retornar_opcionS(op_orden,listaTerminales[i])<<endl;
+    }
+}
+
+
+//// para float
+
+
+// int acomodarF(int op_orden,int desde, int hasta, Terminal p){
+ 
+//     int i = desde, j = hasta;
+//     while(i<j){
+
+//         while(retornar_opcionF(op_orden,listaTerminales[i])<=retornar_opcionF(op_orden,p )&& i<j)
+//             {i++;}
+//         while(retornar_opcionF(op_orden,listaTerminales[j])>retornar_opcionF(op_orden,p) && i<j)
+//             {j--;}
+//         if(i<j)
+//             {swap(listaTerminales[i],listaTerminales[j]);}
+//     }
+//    // imprimirListaTerminalesOrdenada();
+//     return (retornar_opcionF(op_orden,listaTerminales[i]) < retornar_opcionF(op_orden,p) ? i: i-1 );
+// };
+
+// void imprimirListaTerminalesOrdenadaF(int op_orden){
+
+//     cout<< " ** MOSTRANDO LA LISTA DE TERMINALES ORDENADA ** "<<endl;
+//     for(int i=0; i< listaTerminales.size();i++){
+//         cout<<i+1<<" * " <<listaTerminales[i].get_codigo()<<" - "<<retornar_opcionF(op_orden,listaTerminales[i])<<endl;
+//     }
+// }
+// void ordenarF (int op_orden){
+//      ordenarEntreF(op_orden,0, listaTerminales.size()-1);
+// };
+
+// void ordenarEntreF (int op_orden,int desde, int hasta){
+//     if (desde<hasta){
+//         Terminal p = listaTerminales[desde];  //p es el pivot, un elemento cualquiera del vector
+//         int medio = acomodarF(op_orden,desde, hasta , p);  
+//         swap(listaTerminales[desde],listaTerminales[medio]);
+//         ordenarEntreF( op_orden,desde, medio-1);
+//         ordenarEntreF(op_orden,medio+1,hasta);
+//     }
+// };

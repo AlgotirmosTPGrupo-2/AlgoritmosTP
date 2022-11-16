@@ -29,7 +29,7 @@ public:
     void imprimirTer();
     int  cantDigitos( float );
     void costoViaje( string , string,int );  
-    void consultaRecorridoPorCosto(string,string);
+    void consultaRecorridoPorCosto(string,string,string);
     int  dev_Posicion(string);
     void menuDeInicio();
     void solicitarDatosAUsuario();

@@ -213,11 +213,11 @@ void Grafo :: costoViaje(string origen, string destino,int eleccion){
         }
       //  if (posicionOrigen==undefined ||posicionDestino==NULL){cout<<"ingreso de terminal inexistente "}
     cout<<"\nEL RECORRIDO RECOMENDADO PARA SU VIAJE DE :"<< origen<<" HASTA "<<destino<<" ES DE "<<costo[posicionOrigen][posicionDestino]<<mensaje<<endl;
-      consultaRecorridoPorCosto(origen,destino);
+      consultaRecorridoPorCosto(mensaje,origen,destino);
        
 }
 
-void Grafo:: consultaRecorridoPorCosto(string origen,string destino) {
+void Grafo:: consultaRecorridoPorCosto(string mensaje,string origen,string destino) {
     
     string detalle_de_viaje="";
     int posOrigen=dev_Posicion(origen);
@@ -228,14 +228,25 @@ void Grafo:: consultaRecorridoPorCosto(string origen,string destino) {
         destino=recorrido[posOrigen][posDestino];//string
         
         posDestino=dev_Posicion(recorrido[posOrigen][posDestino]);//entero
-        detalle_de_viaje="\n [ $  "+to_string(costo[posDestino][aux])+ " en el tramo "+destino+"-"+auxDest+"]"+detalle_de_viaje;
+        //costo[posDestino][aux].setpresicion;
+        string s="";
+        stringstream ss;
+        ss << fixed << setprecision(2) << (costo[posDestino][aux]);
+        s += ss.str();
+        
+        detalle_de_viaje="\n [ "+mensaje+s+ " en el tramo "+destino+"-"+auxDest+"]"+detalle_de_viaje;
         aux=posDestino;
         auxDest=vectorTerminales[aux].get_codigo();
         
 
 
     }
-    detalle_de_viaje="\n [ $  "+to_string(costo[dev_Posicion(origen)][aux])+ " en el tramo "+origen+"-"+auxDest+"]"+detalle_de_viaje;
+    string s="";
+    stringstream ss;
+    ss << fixed << setprecision(2) << (costo[dev_Posicion(origen)][aux]);
+    s += ss.str();
+
+    detalle_de_viaje="\n [ "+mensaje+s+ " en el tramo "+origen+"-"+auxDest+"]"+detalle_de_viaje;
     cout<<"Siendo su recorrido el siguiente :   " <<detalle_de_viaje<<"\n"<<endl;
 
 

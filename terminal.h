@@ -24,6 +24,13 @@ public:
 
 
     string get_codigo();
+    string get_nombre();
+    string get_ciudad();
+    string get_pais();
+    float get_superficie();
+    int get_cantidadTerminales();
+    int get_destinosNacionales(); 
+    int get_destinosInternacionales();
     void addViaje(Viaje);
     void imprimir();
     bool esMiCodigo(string);
