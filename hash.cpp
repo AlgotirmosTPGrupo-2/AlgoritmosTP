@@ -2,7 +2,7 @@
 #include<iostream>
 using namespace std;
 
-unsigned long long CharAEntero(char entrada)
+unsigned long long CharAEntero(char entrada) 
 {
 	unsigned long long Salida;
 	Salida = entrada;
