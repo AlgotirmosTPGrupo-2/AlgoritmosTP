@@ -18,6 +18,10 @@
 #define DELIMITADOR_CAMPOS " "
 #define ARCHIVO_DE_VIAJES "viajes.txt"
 #define ARCHIVO_DE_TERMINALES "terminales.txt"
+#define GET_CODIGO get_codigo()
+#define GET_SUP get_superficie()
+
+
 
 
 
@@ -34,10 +38,10 @@ void lecturaYCargoDeTerminales();
 void imprimirTerminales();
 void cabeceraDeTerminal();
 void crearClaseTerminal(string cadena);
-void ordenar();
-void ordenarEntre(int desde, int hasta);
-int acomodar(int,int,Terminal);
-void imprimirListaTerminalesOrdenada();
+void ordenar(int);
+void ordenarEntre(int,int desde, int hasta);
+int acomodar(int,int,int,Terminal);
+void imprimirListaTerminalesOrdenada(int);
 string convierteAStringF(float i);
 string convierteAStringInt(int i);
 void imprimirViajes2();//IMPRIMIR VIAJES POR TERMINAL
@@ -45,18 +49,20 @@ vector<Viaje> listaDeViajes;// lista de todos los viajes en archivo
 int numero;
 int CONTADOR_INCONSISTENCIAS;
 vector<Terminal> listaTerminales;
+float retornar_opcion(int,Terminal );
+string retornar_opcionS(int,Terminal);
+
 
 
 int main() {
-    
+  
     lecturaYCargoDeTerminales();
     lecturaDeArchivoViajes();
     //ordenar();
 
    Grafo grafo=Grafo(listaTerminales);
    opciones(grafo);
-    ordenar();
-    imprimirListaTerminalesOrdenada();
+    
     
       
     
@@ -178,7 +184,7 @@ void opciones(Grafo grafo){
         case 1:
             imprimirTerminales();
 
-            imprimirViajes2();
+            //imprimirViajes2();
             
             //mostrarDatos();
              break;
@@ -370,16 +376,24 @@ void imprimirViajes2(){
 
 void cabeceraDeTerminal(){
       cout<<endl;
+
+
       cout<< "****    ****    ****    ****    ****    ****    ****    ****    ****    ****    ****    ****" <<endl;
       cout<< "codigo  nombre      ciudad      pais           sup   cantTerm      cantDestNac    cantDestInter" <<endl;
 };
 void imprimirTerminales(){
+    int op_orden;
+   
+    cout<< "\nSELECCIONE LA OPCION DE ORDENAMIENTO PARA LA VISUALIZACION DE TERMINALES   "<<endl;
 
+   
+    cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2.  NOMBRE \n 3. CIUDAD  \n 4. PAIS  \n 5. SUPERFICIE";
+    cin>>op_orden;
 
-     cabeceraDeTerminal();
-    for(int v=0; v<listaTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
-         listaTerminales[v].imprimir();
-     }
+    ordenar(op_orden);
+    
+    imprimirListaTerminalesOrdenada(op_orden);
+    
      cout<<endl;
  } ;
 
@@ -415,39 +429,75 @@ float convierteAFloat(string i){
     ss>>num;
     return num;
 };
-
-void ordenar (){
-     ordenarEntre(0, TERMINALES_CANTIDAD-1);
+/// COMIENZA CODIGO DE ORDENAMIENTO     
+void ordenar (int op_orden){
+     ordenarEntre(op_orden,0, listaTerminales.size()-1);
 };
 
-void ordenarEntre (int desde, int hasta){
+void ordenarEntre (int op_orden,int desde, int hasta){
     if (desde<hasta){
         Terminal p = listaTerminales[desde];  //p es el pivot, un elemento cualquiera del vector
-        int medio = acomodar(desde, hasta , p);  
+        int medio = acomodar(op_orden,desde, hasta , p);  
         swap(listaTerminales[desde],listaTerminales[medio]);
-        ordenarEntre( desde, medio-1);
-        ordenarEntre(medio+1,hasta);
+        ordenarEntre( op_orden,desde, medio-1);
+        ordenarEntre(op_orden,medio+1,hasta);
     }
 };
+ float retornar_opcion(int op_orden ,Terminal t){
+    return t.GET_SUP;
+ };
 
-int acomodar(int desde, int hasta, Terminal p){
+string retornar_opcionS(int op_orden ,Terminal t){
+ 
+    
+    switch(op_orden){
+          case 1:
+             return t.get_codigo();
+            
+              break;
+          case 2:
+               return t.get_nombre();
+           
+            break;
+        case 3:
+             return t.get_ciudad();
+           
+             break;
+        case 4:
+             return t.get_pais();
+            
+            
+            break;
+        
+
+        default:
+            cout<<"   otraaaaaaaaOpcion incorrecta";
+           // opciones(grafo);
+    }
+}
+
+
+int acomodar(int op_orden,int desde, int hasta, Terminal p){
+ 
     int i = desde, j = hasta;
     while(i<j){
-        while(listaTerminales[i].get_superficie()<=p.get_superficie() && i<j)
+
+        while(retornar_opcionS(op_orden,listaTerminales[i])<=retornar_opcionS(op_orden,p )&& i<j)
             {i++;}
-        while(listaTerminales[j].get_superficie()>p.get_superficie() && i<j)
+        while(retornar_opcionS(op_orden,listaTerminales[j])>retornar_opcionS(op_orden,p) && i<j)
             {j--;}
         if(i<j)
             {swap(listaTerminales[i],listaTerminales[j]);}
     }
    // imprimirListaTerminalesOrdenada();
-    return (listaTerminales[i].get_superficie() < p.get_superficie() ? i: i-1 );
+    return (retornar_opcionS(op_orden,listaTerminales[i]) < retornar_opcionS(op_orden,p) ? i: i-1 );
 };
 
-void imprimirListaTerminalesOrdenada(){
+void imprimirListaTerminalesOrdenada(int op_orden){
 
     cout<< " ** MOSTRANDO LA LISTA DE TERMINALES ORDENADA ** "<<endl;
     for(int i=0; i< listaTerminales.size();i++){
-        cout<<i+1<<" * " <<listaTerminales[i].get_codigo()<<" - "<<listaTerminales[i].get_superficie()<<"  -  "<<endl;
+        cout<<i+1<<" * " <<listaTerminales[i].get_codigo()<<" - "<<retornar_opcionS(op_orden,listaTerminales[i])<<endl;
     }
 }
+
