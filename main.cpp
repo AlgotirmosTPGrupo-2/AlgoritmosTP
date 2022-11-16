@@ -12,6 +12,7 @@
 #include<sstream>
 #include <bits/stdc++.h>
 
+
 #include "viaje.h"
 //#include "viaje.cpp"
 #define DELIMITADOR_CAMPOS " "
@@ -50,10 +51,12 @@ int main() {
     
     lecturaYCargoDeTerminales();
     lecturaDeArchivoViajes();
-    ordenar();
+    //ordenar();
 
-    Grafo grafo=Grafo(listaTerminales);
-    opciones(grafo);
+   Grafo grafo=Grafo(listaTerminales);
+   opciones(grafo);
+    ordenar();
+    imprimirListaTerminalesOrdenada();
     
       
     
@@ -167,7 +170,7 @@ void opciones(Grafo grafo){
     cout << "5. Salir" << endl;
 
 
-    cout<<"Ingrese un numero entre 1 y 4 segun desee: ";
+    cout<<"Ingrese un numero entre 1 y 5 segun desee: ";
     cin>>numero;
 
 
@@ -421,7 +424,7 @@ void ordenarEntre (int desde, int hasta){
     if (desde<hasta){
         Terminal p = listaTerminales[desde];  //p es el pivot, un elemento cualquiera del vector
         int medio = acomodar(desde, hasta , p);  
-        swap(desde, medio);
+        swap(listaTerminales[desde],listaTerminales[medio]);
         ordenarEntre( desde, medio-1);
         ordenarEntre(medio+1,hasta);
     }
@@ -430,20 +433,21 @@ void ordenarEntre (int desde, int hasta){
 int acomodar(int desde, int hasta, Terminal p){
     int i = desde, j = hasta;
     while(i<j){
-        while(listaTerminales[i].get_codigo()<=p.get_codigo() && i<j)
+        while(listaTerminales[i].get_superficie()<=p.get_superficie() && i<j)
             {i++;}
-        while(listaTerminales[j].get_codigo()>p.get_codigo() && i<j)
+        while(listaTerminales[j].get_superficie()>p.get_superficie() && i<j)
             {j--;}
         if(i<j)
-            {std::swap(i,j);}
+            {swap(listaTerminales[i],listaTerminales[j]);}
     }
-    imprimirListaTerminalesOrdenada();
-    return (listaTerminales[i].get_codigo() < p.get_codigo() ? i: i-1 );
+   // imprimirListaTerminalesOrdenada();
+    return (listaTerminales[i].get_superficie() < p.get_superficie() ? i: i-1 );
 };
 
 void imprimirListaTerminalesOrdenada(){
+
     cout<< " ** MOSTRANDO LA LISTA DE TERMINALES ORDENADA ** "<<endl;
     for(int i=0; i< listaTerminales.size();i++){
-        cout<<listaTerminales[i].get_codigo();
+        cout<<i+1<<" * " <<listaTerminales[i].get_codigo()<<" - "<<listaTerminales[i].get_superficie()<<"  -  "<<endl;
     }
 }

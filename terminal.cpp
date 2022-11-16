@@ -25,6 +25,29 @@ using namespace std;
     string Terminal::get_codigo(){
         return codigo;
     };
+    string Terminal::get_nombre(){
+        return nombre;
+    }
+    string Terminal::get_ciudad(){
+        return ciudad;
+    }
+    string Terminal:: get_pais(){
+        return pais;
+    };
+    float Terminal:: get_superficie(){
+        return superficie;
+    };
+    int Terminal ::get_cantidadTerminales(){
+        return cantidadTerminales;
+    };
+    int Terminal ::get_destinosNacionales(){
+        return destinosNacionales;
+    }; 
+    int Terminal ::get_destinosInternacionales(){
+        return destinosInternacionales;
+    }
+   
+
     void Terminal::addViaje(Viaje v){
          listaDeMisViajes.push_back(v);
     };
