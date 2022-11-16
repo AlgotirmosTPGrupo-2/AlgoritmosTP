@@ -8,13 +8,9 @@
 #include "terminal.cpp"
 #include "grafo.h"
 #include "grafo.cpp"
-
 #include<sstream>
 #include <bits/stdc++.h>
-
-
 #include "viaje.h"
-//#include "viaje.cpp"
 #define DELIMITADOR_CAMPOS " "
 #define ARCHIVO_DE_VIAJES "viajes.txt"
 #define ARCHIVO_DE_TERMINALES "terminales.txt"
@@ -38,10 +34,20 @@ void lecturaYCargoDeTerminales();
 void imprimirTerminales();
 void cabeceraDeTerminal();
 void crearClaseTerminal(string cadena);
+//ordenamiento string
 void ordenar(int);
 void ordenarEntre(int,int desde, int hasta);
 int acomodar(int,int,int,Terminal);
 void imprimirListaTerminalesOrdenada(int);
+string retornar_opcionS(int,Terminal);
+
+//ordenamiento float
+void ordenarF(int);
+void ordenarEntreF(int,int desde, int hasta);
+int acomodarF(int,int,int,Terminal);
+void imprimirListaTerminalesOrdenadaF(int);
+float retornar_opcionF(int,Terminal );
+
 string convierteAStringF(float i);
 string convierteAStringInt(int i);
 void imprimirViajes2();//IMPRIMIR VIAJES POR TERMINAL
@@ -49,8 +55,8 @@ vector<Viaje> listaDeViajes;// lista de todos los viajes en archivo
 int numero;
 int CONTADOR_INCONSISTENCIAS;
 vector<Terminal> listaTerminales;
-float retornar_opcion(int,Terminal );
-string retornar_opcionS(int,Terminal);
+
+
 
 
 
@@ -387,12 +393,18 @@ void imprimirTerminales(){
     cout<< "\nSELECCIONE LA OPCION DE ORDENAMIENTO PARA LA VISUALIZACION DE TERMINALES   "<<endl;
 
    
-    cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2.  NOMBRE \n 3. CIUDAD  \n 4. PAIS  \n 5. SUPERFICIE";
+    cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2. NOMBRE \n 3. CIUDAD  \n 4. PAIS  \n ";
     cin>>op_orden;
+    // //if(op_orden==5){
+    //     ordenarF(op_orden);
+    
+    //     imprimirListaTerminalesOrdenadaF(op_orden);
 
+    // }else {
     ordenar(op_orden);
     
     imprimirListaTerminalesOrdenada(op_orden);
+    
     
      cout<<endl;
  } ;
@@ -443,7 +455,7 @@ void ordenarEntre (int op_orden,int desde, int hasta){
         ordenarEntre(op_orden,medio+1,hasta);
     }
 };
- float retornar_opcion(int op_orden ,Terminal t){
+ float retornar_float(int op_orden ,Terminal t){
     return t.GET_SUP;
  };
 
@@ -465,13 +477,9 @@ string retornar_opcionS(int op_orden ,Terminal t){
              break;
         case 4:
              return t.get_pais();
-            
-            
-            break;
         
-
         default:
-            cout<<"   otraaaaaaaaOpcion incorrecta";
+            cout<<"   otra Opcion incorrecta";
            // opciones(grafo);
     }
 }
@@ -501,3 +509,43 @@ void imprimirListaTerminalesOrdenada(int op_orden){
     }
 }
 
+
+//// para float
+
+
+// int acomodarF(int op_orden,int desde, int hasta, Terminal p){
+ 
+//     int i = desde, j = hasta;
+//     while(i<j){
+
+//         while(retornar_opcionF(op_orden,listaTerminales[i])<=retornar_opcionF(op_orden,p )&& i<j)
+//             {i++;}
+//         while(retornar_opcionF(op_orden,listaTerminales[j])>retornar_opcionF(op_orden,p) && i<j)
+//             {j--;}
+//         if(i<j)
+//             {swap(listaTerminales[i],listaTerminales[j]);}
+//     }
+//    // imprimirListaTerminalesOrdenada();
+//     return (retornar_opcionF(op_orden,listaTerminales[i]) < retornar_opcionF(op_orden,p) ? i: i-1 );
+// };
+
+// void imprimirListaTerminalesOrdenadaF(int op_orden){
+
+//     cout<< " ** MOSTRANDO LA LISTA DE TERMINALES ORDENADA ** "<<endl;
+//     for(int i=0; i< listaTerminales.size();i++){
+//         cout<<i+1<<" * " <<listaTerminales[i].get_codigo()<<" - "<<retornar_opcionF(op_orden,listaTerminales[i])<<endl;
+//     }
+// }
+// void ordenarF (int op_orden){
+//      ordenarEntreF(op_orden,0, listaTerminales.size()-1);
+// };
+
+// void ordenarEntreF (int op_orden,int desde, int hasta){
+//     if (desde<hasta){
+//         Terminal p = listaTerminales[desde];  //p es el pivot, un elemento cualquiera del vector
+//         int medio = acomodarF(op_orden,desde, hasta , p);  
+//         swap(listaTerminales[desde],listaTerminales[medio]);
+//         ordenarEntreF( op_orden,desde, medio-1);
+//         ordenarEntreF(op_orden,medio+1,hasta);
+//     }
+// };
