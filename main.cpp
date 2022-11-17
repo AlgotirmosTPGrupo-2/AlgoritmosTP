@@ -140,7 +140,7 @@ void agregarTerminal(){
 }
 
 void quitarTerminal(){
-    string line;
+    string line,codigo;
     vector<string> lines; //Se crea un vector para guardar los datos del archivo
 
     ifstream myfile (ARCHIVO_DE_TERMINALES, ios::in);//Se abre el archivo en modo lectura
@@ -158,7 +158,27 @@ void quitarTerminal(){
     }
     cout<<"Ingrese el numero de la terminal que desea eliminar: "; //Se pide el numero de la linea que se desea eliminar
     cin>>numero;
-    lines.erase(lines.begin()+numero-1); //Se elimina la linea del vector
+    //correccion
+    ofstream myfile3;
+    myfile3.open(ARCHIVO_DE_TERMINALES, ios::out);//Se abre el archivo en modo lectura
+    int borrar;
+    for(int i=0; i<lines.size(); ++i){ //Se recorre el vector para escribir los datos en el archivo nuevo
+        if (i==numero-1){
+            borrar=i;
+            int posInicio=0;
+            int posFin=lines[i].find_first_of(DELIMITADOR_CAMPOS,posInicio);
+            string subcadena=lines[i].substr(posInicio,(posFin-posInicio));
+             codigo=subcadena;
+            for(int i=0;i<listaTerminales.size();i++){
+             if(codigo==listaTerminales[i].get_codigo()){
+            listaTerminales.erase((listaTerminales.begin()+i));//se borra la clase instanciada de terminal de la lista de terminales también
+        }
+    } 
+        };
+    }
+    myfile3.close(); //Se cierra el archivo nuevo
+    
+    lines.erase(lines.begin()+(numero-1)); //Se elimina la linea del vector
     ofstream myfile2; //Se crea un archivo nuevo
 
     myfile2.open(ARCHIVO_DE_TERMINALES, ios::out);//Se abre el archivo en modo lectura
@@ -167,8 +187,7 @@ void quitarTerminal(){
         myfile2<<lines[i]<<endl;
     }
     myfile2.close(); //Se cierra el archivo nuevo
-
-    listaTerminales.erase(listaTerminales.begin()+numero-1);//se borra la clase instanciada de terminal de la lista de terminales también
+    
 };
 
 void opciones(Grafo grafo){
@@ -192,7 +211,7 @@ void opciones(Grafo grafo){
 
             //imprimirViajes2();
             
-            //mostrarDatos();
+            mostrarDatos();
              break;
         case 2:
             agregarTerminal();
@@ -208,6 +227,7 @@ void opciones(Grafo grafo){
            
             grafo.menuDeInicio();
             grafo.liberar();
+            opciones(grafo);
             
             break;
         case 5:
