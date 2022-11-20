@@ -21,6 +21,7 @@
 
 
 
+
 using namespace std;
 
 void mostrarDatos();
@@ -66,7 +67,7 @@ int main() {
     lecturaDeArchivoViajes();
     //ordenar();
 
-   Grafo grafo=Grafo(listaTerminales);
+   Grafo grafo=Grafo();
    opciones(grafo);
     
     
@@ -223,12 +224,19 @@ void opciones(Grafo grafo){
             quitarTerminal();
            
              break;
-        case 4:
+        case 4:{
+           float **costo= new float*[listaTerminales.size()];
+           string **recorrido= new string*[listaTerminales.size()];
+            for(int i=0;i<listaTerminales.size();i++){
+            
+            costo[i]=new float[listaTerminales.size()];
+            recorrido[i]=new string[listaTerminales.size()];
+            }
            
-            grafo.menuDeInicio();
+            grafo.menuDeInicio(listaTerminales,costo,recorrido);
             grafo.liberar();
             opciones(grafo);
-            
+        }
             break;
         case 5:
             cout << "Adios!" << endl; break;    

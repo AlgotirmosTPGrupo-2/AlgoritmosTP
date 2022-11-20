@@ -19,24 +19,34 @@ using namespace std;
 
 
 vector <Terminal> vectorTerminales;
-//float costo[MEDIDA_primero][MEDIDA_primero];
-//string recorrido[MEDIDA_primero][MEDIDA_primero];
+
+float **costo;
+string **recorrido;
   
 
 
     
-Grafo::Grafo(vector <Terminal> _vectorTerminales){
-        vectorTerminales=_vectorTerminales;
-        float **costo=new float*[TERMINALES_CANTIDAD];
-        string **recorrido=new string*[TERMINALES_CANTIDAD];
-        for(int i=0;i<TERMINALES_CANTIDAD;i++){
-            costo[i]=new float[TERMINALES_CANTIDAD];
-            recorrido[i]=new string[TERMINALES_CANTIDAD];
-        }
+Grafo::Grafo(){
+        //vectorTerminales=_vectorTerminales;
+        // float **costo=new float*[TERMINALES_CANTIDAD];
+        // string **recorrido=new string*[TERMINALES_CANTIDAD];
+        // for(int i=0;i<TERMINALES_CANTIDAD;i++){
+        //     costo[i]=new float[TERMINALES_CANTIDAD];
+        //     recorrido[i]=new string[TERMINALES_CANTIDAD];
+        // }
     };//constructor
 
 
-void Grafo:: menuDeInicio(){
+void Grafo:: menuDeInicio(vector <Terminal> _vectorTerminales,float **_costo,string **_recorrido){
+    
+     vectorTerminales=_vectorTerminales;
+    
+     
+     costo=_costo;
+     recorrido=_recorrido;
+
+       
+        
     inicializarMatrices();
     
     solicitarDatosAUsuario();
