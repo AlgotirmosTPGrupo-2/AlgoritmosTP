@@ -212,7 +212,7 @@ void opciones(Grafo grafo){
 
             //imprimirViajes2();
             
-            mostrarDatos();
+           // mostrarDatos();
              break;
         case 2:
             agregarTerminal();
@@ -413,7 +413,7 @@ void cabeceraDeTerminal(){
 
 
       cout<< "****    ****    ****    ****    ****    ****    ****    ****    ****    ****    ****    ****" <<endl;
-      cout<< "codigo  nombre      ciudad      pais           sup   cantTerm      cantDestNac    cantDestInter" <<endl;
+      cout<< "   codigo  nombre      ciudad      pais           sup   cantTerm      cantDestNac    cantDestInter" <<endl;
 };
 void imprimirTerminales(){
     int op_orden;
@@ -429,8 +429,10 @@ void imprimirTerminales(){
     //     imprimirListaTerminalesOrdenadaF(op_orden);
 
     // }else {
+    cout<< "\n\n\t ** MOSTRANDO LA LISTA DE TERMINALES SIN ORDENAR ** "<<endl;    
+    imprimirListaTerminalesOrdenada(op_orden);    
     ordenar(op_orden);
-    
+    cout<< " \n\n\t** MOSTRANDO LA LISTA DE TERMINALES ORDENADA ** "<<endl;
     imprimirListaTerminalesOrdenada(op_orden);
     
     
@@ -531,9 +533,11 @@ int acomodar(int op_orden,int desde, int hasta, Terminal p){
 
 void imprimirListaTerminalesOrdenada(int op_orden){
 
-    cout<< " ** MOSTRANDO LA LISTA DE TERMINALES ORDENADA ** "<<endl;
+    
+    cabeceraDeTerminal();
     for(int i=0; i< listaTerminales.size();i++){
-        cout<<i+1<<" * " <<listaTerminales[i].get_codigo()<<" - "<<retornar_opcionS(op_orden,listaTerminales[i])<<endl;
+        cout<<i+1<<" * " ;
+        listaTerminales[i].imprimir();
     }
 }
 
