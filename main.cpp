@@ -35,6 +35,7 @@ void lecturaYCargoDeTerminales();
 void imprimirTerminales();
 void cabeceraDeTerminal();
 void crearClaseTerminal(string cadena);
+void imprimirListaTerminalesSinOrden();
 //ordenamiento string
 void ordenar(int);
 void ordenarEntre(int,int desde, int hasta);
@@ -208,11 +209,12 @@ void opciones(Grafo grafo){
 
     switch(numero){
         case 1:
+            imprimirListaTerminalesSinOrden();
             imprimirTerminales();
 
             //imprimirViajes2();
             
-            mostrarDatos();
+           // mostrarDatos();
              break;
         case 2:
             agregarTerminal();
@@ -413,22 +415,23 @@ void cabeceraDeTerminal(){
 
 
       cout<< "****    ****    ****    ****    ****    ****    ****    ****    ****    ****    ****    ****" <<endl;
-      cout<< "codigo  nombre      ciudad      pais           sup   cantTerm      cantDestNac    cantDestInter" <<endl;
+      cout<< "    codigo  nombre      ciudad      pais           sup   cantTerm      cantDestNac    cantDestInter" <<endl;
 };
 void imprimirTerminales(){
     int op_orden;
    
     cout<< "\nSELECCIONE LA OPCION DE ORDENAMIENTO PARA LA VISUALIZACION DE TERMINALES   "<<endl;
 
-   
-    cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2. NOMBRE \n 3. CIUDAD  \n 4. PAIS  \n ";
+   //cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2. NOMBRE   \n 4. PAIS  \n";
+   cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2. NOMBRE \n 3. CIUDAD  \n 4. PAIS  \n 5. SUPERFICIE\n 6. CANTIDAD TERMINALES \n 7. DESTINOS _NACIONALES \n 8. DESTINOS _INTERNACIONALES\n";
     cin>>op_orden;
-    // //if(op_orden==5){
-    //     ordenarF(op_orden);
+    // while (op_orden<1 || op_orden>8 )
+    // {
+    //     cout<<"\n\n\t********   opcion incorrecta ********";
+    //     cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2. NOMBRE \n 3. CIUDAD  \n 4. PAIS  \n 5. SUPERFICIE\n 6. CANTIDAD TERMINALES \n 7. DESTINOS _NACIONALES \n 8. DESTINOS _INTERNACIONALES";
+    //    cin>>op_orden;
+    // }
     
-    //     imprimirListaTerminalesOrdenadaF(op_orden);
-
-    // }else {
     ordenar(op_orden);
     
     imprimirListaTerminalesOrdenada(op_orden);
@@ -483,97 +486,121 @@ void ordenarEntre (int op_orden,int desde, int hasta){
         ordenarEntre(op_orden,medio+1,hasta);
     }
 };
- float retornar_float(int op_orden ,Terminal t){
-    return t.GET_SUP;
- };
 
-string retornar_opcionS(int op_orden ,Terminal t){
- 
-    
-    switch(op_orden){
-          case 1:
-             return t.get_codigo();
-            
-              break;
-          case 2:
-               return t.get_nombre();
-           
-            break;
-        case 3:
-             return t.get_ciudad();
-           
-             break;
-        case 4:
-             return t.get_pais();
-        
-        default:
-            cout<<"   otra Opcion incorrecta";
-           // opciones(grafo);
-    }
-}
 
 
 int acomodar(int op_orden,int desde, int hasta, Terminal p){
  
     int i = desde, j = hasta;
+   bool condicion,condicion2,condicionDeSalida;
+   cout<<"llega aca 1";
+        if (op_orden==1){ 
+             condicion=listaTerminales[i].get_codigo()<=p.get_codigo();
+             condicion2=listaTerminales[j].get_codigo()>p.get_codigo();
+             condicionDeSalida=listaTerminales[i].get_codigo()<p.get_codigo(); }  ; 
+         if (op_orden==2){
+              condicion=listaTerminales[i].get_nombre()<=p.get_nombre(); 
+              condicion2=listaTerminales[j].get_nombre()>p.get_nombre();
+              condicionDeSalida=listaTerminales[i].get_nombre()<p.get_nombre(); };
+         if (op_orden==3){ 
+             condicion=listaTerminales[i].get_ciudad()<=p.get_ciudad(); 
+             condicion2=listaTerminales[j].get_ciudad()>p.get_ciudad();
+             condicionDeSalida=listaTerminales[i].get_ciudad()<p.get_ciudad();
+             };
+        if (op_orden==4){ 
+             condicion=listaTerminales[i].get_pais()<=p.get_pais(); 
+             condicion2=listaTerminales[j].get_pais()>p.get_pais();
+             condicionDeSalida=listaTerminales[i].get_pais()<p.get_pais();
+             };
+         if (op_orden==5){ 
+             condicion=listaTerminales[i].get_superficie()<=p.get_superficie();
+             condicion2=listaTerminales[j].get_superficie()>p.get_superficie();
+             condicionDeSalida=listaTerminales[i].get_superficie()<p.get_superficie(); };
+        if (op_orden==6){
+            condicion=listaTerminales[i].get_cantidadTerminales()<=p.get_cantidadTerminales();
+            condicion2=listaTerminales[j].get_cantidadTerminales()>p.get_cantidadTerminales();
+            condicionDeSalida=listaTerminales[i].get_cantidadTerminales()<p.get_cantidadTerminales(); };
+        if (op_orden==7){ 
+             condicion=listaTerminales[i].get_destinosNacionales()<=p.get_destinosNacionales(); 
+             condicion2=listaTerminales[j].get_destinosNacionales()>p.get_destinosNacionales();
+             condicionDeSalida=listaTerminales[i].get_destinosNacionales()<p.get_destinosNacionales();}; 
+         if (op_orden==8){  
+            condicion=listaTerminales[i].get_destinosInternacionales()<=p.get_destinosInternacionales();
+            condicion2=listaTerminales[j].get_destinosInternacionales()>p.get_destinosInternacionales();
+            condicionDeSalida=listaTerminales[i].get_destinosInternacionales()<p.get_destinosInternacionales(); }; 
     while(i<j){
+        
 
-        while(retornar_opcionS(op_orden,listaTerminales[i])<=retornar_opcionS(op_orden,p )&& i<j)
-            {i++;}
-        while(retornar_opcionS(op_orden,listaTerminales[j])>retornar_opcionS(op_orden,p) && i<j)
-            {j--;}
+         while(condicion && i<j)
+      //  while(retornar_opcionS(op_orden,listaTerminales[i])<=retornar_opcionS(op_orden,p )&& i<j)
+            {
+                 cout<<"llega aca 2";
+                 i++;
+                if (op_orden==1){  condicion=listaTerminales[i].get_codigo()<=p.get_codigo();
+                              condicionDeSalida=listaTerminales[i].get_codigo()<p.get_codigo();}  ; 
+
+                if (op_orden==2){  condicion=listaTerminales[i].get_nombre()<=p.get_nombre();
+                            condicionDeSalida=listaTerminales[i].get_nombre()<p.get_nombre(); };
+
+                if (op_orden==3){  condicion=listaTerminales[i].get_ciudad()<=p.get_ciudad(); 
+                        condicionDeSalida=listaTerminales[i].get_ciudad()<p.get_ciudad();};
+
+                if (op_orden==4){  condicion=listaTerminales[i].get_pais()<=p.get_pais(); 
+                         condicionDeSalida=listaTerminales[i].get_pais()<p.get_pais();};
+
+                if (op_orden==5){  condicion=listaTerminales[i].get_superficie()<=p.get_superficie();
+                          condicionDeSalida=listaTerminales[i].get_superficie()<p.get_superficie(); };
+
+                if (op_orden==6){  condicion=listaTerminales[i].get_cantidadTerminales()<=p.get_cantidadTerminales(); 
+                             condicionDeSalida=listaTerminales[i].get_cantidadTerminales()<p.get_cantidadTerminales();}; 
+
+                if (op_orden==7){  condicion=listaTerminales[i].get_destinosNacionales()<=p.get_destinosNacionales(); 
+                            condicionDeSalida=listaTerminales[i].get_destinosNacionales()<p.get_destinosNacionales();
+                            }; 
+                if (op_orden==8){  condicion=listaTerminales[i].get_destinosInternacionales()<=p.get_destinosInternacionales();
+                            condicionDeSalida=listaTerminales[i].get_destinosInternacionales()<p.get_destinosInternacionales(); }; 
+               
+                }
+        while(condicion2 && i<j)
+            {
+                 cout<<"llega aca 3";
+                j--; 
+                if (op_orden==1){ condicion2=listaTerminales[j].get_codigo()>p.get_codigo(); }  ; 
+                if (op_orden==2){ condicion2=listaTerminales[j].get_nombre()>p.get_nombre(); };
+                if (op_orden==3){  condicion2=listaTerminales[j].get_ciudad()>p.get_ciudad();};
+                if (op_orden==4){  condicion2=listaTerminales[j].get_pais()>p.get_pais();};
+                if (op_orden==5){  condicion2=listaTerminales[j].get_superficie()>p.get_superficie(); };
+                if (op_orden==6){condicion2=listaTerminales[j].get_cantidadTerminales()>p.get_cantidadTerminales(); };
+                if (op_orden==7){  condicion2=listaTerminales[j].get_destinosNacionales()>p.get_destinosNacionales();}; 
+                if (op_orden==8){  condicion2=listaTerminales[j].get_destinosInternacionales()>p.get_destinosInternacionales(); }; 
+                        
+            }
         if(i<j)
             {swap(listaTerminales[i],listaTerminales[j]);}
     }
    // imprimirListaTerminalesOrdenada();
-    return (retornar_opcionS(op_orden,listaTerminales[i]) < retornar_opcionS(op_orden,p) ? i: i-1 );
+    return (condicionDeSalida ? i: i-1 );
 };
 
 void imprimirListaTerminalesOrdenada(int op_orden){
 
-    cout<< " ** MOSTRANDO LA LISTA DE TERMINALES ORDENADA ** "<<endl;
+    cout<< "\n\n\t \t ** MOSTRANDO LA LISTA DE TERMINALES ORDENADA ** "<<endl;
+    cabeceraDeTerminal();
     for(int i=0; i< listaTerminales.size();i++){
-        cout<<i+1<<" * " <<listaTerminales[i].get_codigo()<<" - "<<retornar_opcionS(op_orden,listaTerminales[i])<<endl;
+         cout<<i+1<<" * " ;
+        listaTerminales[i].imprimir();
+        // cout<<i+1<<" * " <<listaTerminales[i].get_codigo()<<" - "<<retornar_opcionS(op_orden,listaTerminales[i])<<endl;
+    }
+}
+void imprimirListaTerminalesSinOrden(){
+    
+    cout<< " \n\n\t \t ** MOSTRANDO LA LISTA DE TERMINALES SIN ORDENAR ** "<<endl;
+    cabeceraDeTerminal();
+  
+    for(int i=0; i< listaTerminales.size();i++){
+        cout<<i+1<<" * " ;
+        listaTerminales[i].imprimir();
     }
 }
 
 
-//// para float
-
-
-// int acomodarF(int op_orden,int desde, int hasta, Terminal p){
- 
-//     int i = desde, j = hasta;
-//     while(i<j){
-
-//         while(retornar_opcionF(op_orden,listaTerminales[i])<=retornar_opcionF(op_orden,p )&& i<j)
-//             {i++;}
-//         while(retornar_opcionF(op_orden,listaTerminales[j])>retornar_opcionF(op_orden,p) && i<j)
-//             {j--;}
-//         if(i<j)
-//             {swap(listaTerminales[i],listaTerminales[j]);}
-//     }
-//    // imprimirListaTerminalesOrdenada();
-//     return (retornar_opcionF(op_orden,listaTerminales[i]) < retornar_opcionF(op_orden,p) ? i: i-1 );
-// };
-
-// void imprimirListaTerminalesOrdenadaF(int op_orden){
-
-//     cout<< " ** MOSTRANDO LA LISTA DE TERMINALES ORDENADA ** "<<endl;
-//     for(int i=0; i< listaTerminales.size();i++){
-//         cout<<i+1<<" * " <<listaTerminales[i].get_codigo()<<" - "<<retornar_opcionF(op_orden,listaTerminales[i])<<endl;
-//     }
-// }
-// void ordenarF (int op_orden){
-//      ordenarEntreF(op_orden,0, listaTerminales.size()-1);
-// };
-
-// void ordenarEntreF (int op_orden,int desde, int hasta){
-//     if (desde<hasta){
-//         Terminal p = listaTerminales[desde];  //p es el pivot, un elemento cualquiera del vector
-//         int medio = acomodarF(op_orden,desde, hasta , p);  
-//         swap(listaTerminales[desde],listaTerminales[medio]);
-//         ordenarEntreF( op_orden,desde, medio-1);
-//         ordenarEntreF(op_orden,medio+1,hasta);
-//     }
-// };
