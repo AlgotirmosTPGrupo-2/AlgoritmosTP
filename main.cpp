@@ -8,6 +8,8 @@
 #include "terminal.cpp"
 #include "grafo.h"
 #include "grafo.cpp"
+#include "tablahash.h"
+#include "tablahash.cpp"
 #include<sstream>
 #include <bits/stdc++.h>
 #include "viaje.h"
@@ -67,11 +69,11 @@ int main() {
     lecturaDeArchivoViajes();
     //ordenar();
 
-   Grafo grafo=Grafo();
-   opciones(grafo);
+    Grafo grafo=Grafo();
+    opciones(grafo);
     
-    
-      
+    TablaHash tabla=TablaHash();
+    tabla.menuDeInicioHash(listaTerminales);
     
     return 0;
 
