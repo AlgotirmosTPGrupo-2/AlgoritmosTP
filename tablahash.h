@@ -24,5 +24,6 @@ public:
     unsigned long long CharAEntero(char entrada);
     unsigned long long ObtenerNumero(string entrada);
     int FuncHash(string entrada);
+    void cargarUnElemento(Terminal laTerminal);
 };
 #endif // TABLAHASH_H_INCLUDED

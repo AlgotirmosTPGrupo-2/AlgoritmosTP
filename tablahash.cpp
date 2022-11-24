@@ -43,7 +43,24 @@ void TablaHash:: menuDeInicioHash(vector <Terminal> _vectorTerminales){
     
     // solicitarDatosAUsuario();
 };
+void TablaHash:: cargarUnElemento(Terminal laTerminal){
+	string Clave=laTerminal.get_codigo();
+			
+                int Pos = FuncHash(Clave);
+                cout<<"\nEl valor ascii es: "<<ObtenerNumero(Clave);
+                cout<<"\nValor hash: "<<Pos;
+                
+                if(sizeof(Tabla[Pos])==0 || Tabla[Pos].get_codigo()==Clave)
+                    Tabla[Pos]= laTerminal;
+                else
+                    for(int i=Pos;i<TABLA_TAMANIO;i++)
+                        if(sizeof(Tabla[i])==0 )
+                        {
+                            Tabla[i]=laTerminal;
+                            break;
+                        }
 
+}
 void TablaHash:: inicializarTabla(){
    
 	int OpcMen=0;
@@ -58,6 +75,7 @@ void TablaHash:: inicializarTabla(){
 		
 		if(OpcMen == 1)
 		{
+
             for(int i=0;i<TERMINALES_CANTIDAD;i++){
                 string Clave=vectorTerminales[i].get_codigo();
 			
@@ -92,8 +110,13 @@ void TablaHash:: inicializarTabla(){
 void TablaHash:: imprimirTablaHash(){
     for (int primero = 0; primero < TABLA_TAMANIO ;primero++)	{		
         if(sizeof(Tabla[primero])!=0){
-        Tabla[primero].imprimir();     
+			cout<<"Elemento #"<<primero<<": "<<Tabla[primero].get_codigo()<<"\n";
+			
+       		 //Tabla[primero].imprimir();     
     }
+	else{
+		cout<<"Elemento #"<<primero<<"sin datos";
+	}
     }   
 }
 

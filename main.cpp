@@ -58,22 +58,23 @@ vector<Viaje> listaDeViajes;// lista de todos los viajes en archivo
 int numero;
 int CONTADOR_INCONSISTENCIAS;
 vector<Terminal> listaTerminales;
-
+TablaHash tablaHash;
 
 
 
 
 int main() {
-  
+    TablaHash tablaHash=TablaHash();
     lecturaYCargoDeTerminales();
     lecturaDeArchivoViajes();
+   // tablaHash.imprimirTablaHash();
     //ordenar();
 
     Grafo grafo=Grafo();
-    opciones(grafo);
-    
-    TablaHash tabla=TablaHash();
-    tabla.menuDeInicioHash(listaTerminales);
+   // opciones(grafo);
+   //tablaHash.
+   // TablaHash tabla=TablaHash();
+    //tabla.menuDeInicioHash(listaTerminales);
     
     return 0;
 
@@ -395,7 +396,7 @@ void crearClaseTerminal(string cadena){
             destinosInternacionales=convierteAInt(subcadena);
 
             Terminal nombreT=Terminal(codigo,nombre,ciudad,pais,superficie,cantidadTerminales, destinosNacionales,destinosInternacionales);
-           
+            tablaHash.cargarUnElemento(nombreT);
             listaTerminales.push_back(nombreT);
 
 } ; 
