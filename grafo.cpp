@@ -27,13 +27,7 @@ string **recorrido;
 
     
 Grafo::Grafo(){
-        //vectorTerminales=_vectorTerminales;
-        // float **costo=new float*[TERMINALES_CANTIDAD];
-        // string **recorrido=new string*[TERMINALES_CANTIDAD];
-        // for(int i=0;i<TERMINALES_CANTIDAD;i++){
-        //     costo[i]=new float[TERMINALES_CANTIDAD];
-        //     recorrido[i]=new string[TERMINALES_CANTIDAD];
-        // }
+      
     };//constructor
 
 

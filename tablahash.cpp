@@ -24,28 +24,12 @@ TablaHash::TablaHash(vector <Terminal> _vectorTerminales,Terminal *tabla){
 		vectorTerminales=_vectorTerminales;
 		Tabla=tabla;
 		
-          //  Terminal nombreT=Terminal(codigo,nombre,ciudad,pais,superficie,cantidadTerminales, destinosNacionales,destinosInternacionales);
-
-			/* code */
-		// }
-		
+        
 
     };//constructor
 
 
-// void TablaHash:: menuDeInicioHash(vector <Terminal> _vectorTerminales){
-    
-//     vectorTerminales=_vectorTerminales;
-    
-//     //tablaHash=_tablaHash;
-    
-//   //  inicializarTabla();
-       
-//     imprimirTablaHash();    
-    
-    
-//     // solicitarDatosAUsuario();
-// };
+
 void TablaHash:: cargarUnElemento(Terminal laTerminal){
 	string Clave=laTerminal.get_codigo();
 			
@@ -53,31 +37,31 @@ void TablaHash:: cargarUnElemento(Terminal laTerminal){
                 cout<<"\nEl valor ascii es: "<<ObtenerNumero(Clave);
                 cout<<"\nValor hash: "<<Pos;
                 
-                //if(sizeof(Tabla[Pos])==0 || Tabla[Pos].get_codigo()==Clave)
-				if(sizeof(Tabla[Pos])==0 || Tabla[Pos].get_codigo()==Clave)
+               
+				if(((Tabla[Pos].get_codigo().compare("vacio")) == 0) || Tabla[Pos].get_codigo()==Clave)
                     Tabla[Pos]= laTerminal;
                 else
                     for(int i=Pos;i<TABLA_TAMANIO;i++)
-                        if(sizeof(Tabla[i])==0 )
+                        if((Tabla[Pos].get_codigo().compare("vacio")) == 0 )
                         {
                             Tabla[i]=laTerminal;
                             break;
                         }
 
-}
+};
 
 void TablaHash:: cargarMuchosElementos(){
 	
-	 cout<<"anda el for?";
+	
 	for(int i=0;i<TERMINALES_CANTIDAD;i++){
 
 				string Clave=vectorTerminales[i].get_codigo();
 			
                 int Pos = FuncHash(Clave);
                 cout<<"\nEl valor ascii es: "<<ObtenerNumero(Clave);
-                cout<<"\nValor hash: "<<Pos<<vectorTerminales[i].get_codigo();
-               // if(sizeof(Tabla[Pos])==0 || Tabla[Pos].get_codigo()==Clave)
-                if(((Tabla[Pos].get_codigo().compare("A")) == 0)|| (Tabla[Pos].get_codigo()==Clave))
+                cout<<"\nValor hash: "<<Pos<<endl;
+              
+                if(((Tabla[Pos].get_codigo().compare("vacio")) == 0)|| (Tabla[Pos].get_codigo()==Clave))
                     {
 						Tabla[Pos]= vectorTerminales[i];
 					}
@@ -87,7 +71,7 @@ void TablaHash:: cargarMuchosElementos(){
 					int inicio=Pos;	
 					while (!cont){	
                     for(int j=inicio;j<TABLA_TAMANIO;j++){
-                        if ((Tabla[j].get_codigo().compare("A")) == 0)
+                        if ((Tabla[j].get_codigo().compare("vacio")) == 0)
                         {
                             Tabla[j]=vectorTerminales[i];
 							cont=true;
@@ -97,73 +81,25 @@ void TablaHash:: cargarMuchosElementos(){
 				     }
 					 inicio=0;
 					 }
-}}}
+}}
+};
 
-void TablaHash:: inicializarTabla(){
-   
-	int OpcMen=0;
-	do
-	{
-		cout<<"---Menu hash---\n";
-		cout<<"1. insertar clave\n";
-		cout<<"2. ver elementos clave\n";
-		cout<<"Ingrese su opcion: ";
-		
-		cin>>OpcMen;
-		
-		if(OpcMen == 1)
-		{
 
-            for(int i=0;i<TERMINALES_CANTIDAD;i++){
-                string Clave=vectorTerminales[i].get_codigo();
-			
-                int Pos = FuncHash(Clave);
-                cout<<"\nEl valor ascii es: "<<ObtenerNumero(Clave);
-                cout<<"\nValor hash: "<<Pos;
-                
-                if(sizeof(Tabla[Pos])==0 || Tabla[Pos].get_codigo()==Clave)
-                    Tabla[Pos]=vectorTerminales[i];
-                else
-                    for(int i=Pos;i<TABLA_TAMANIO;i++)
-                        if(sizeof(Tabla[i])==0 )
-                        {
-                            Tabla[i]=vectorTerminales[i];
-                            break;
-                        }
-		}
-        }
-		if(OpcMen == 2)
-		{
-			for(int i = 0; i<TABLA_TAMANIO; i++)
-			{
-				cout<<"Elemento #"<<i<<": "<<Tabla[i].get_codigo()<<"\n";
-			}
-		}
-
-	cout<<"\n\n";
-		
-	}while(OpcMen!=0);
-}  
 
 void TablaHash:: imprimirTablaHash(){
     for (int primero = 0; primero < TABLA_TAMANIO ;primero++)	{		
-      //  if(sizeof(Tabla[primero])!=0){
+     
 			cout<<"Elemento #"<<primero<<": "<<Tabla[primero].get_codigo()<<"\n";
-			
-       		 //Tabla[primero].imprimir();     
-   // }
-	//else{
-	//	cout<<"Elemento #"<<primero<<"sin datos";
-	//}
+	
     }   
-}
+};
 
 unsigned long long TablaHash:: CharAEntero(char entrada) 
 {
 	unsigned long long Salida;
 	Salida = entrada;
 	return Salida;
-}
+};
 unsigned long long TablaHash:: ObtenerNumero(string entrada)
 {
 	unsigned long long Salida=0;
@@ -206,10 +142,5 @@ int TablaHash:: FuncHash(string entrada)
 	int Salida = Amodular%TABLA_TAMANIO;
 	return Salida;
 }
-void TablaHash::liberar(){
-    
-    delete[] Tabla;
-    
-  }                
 
 

@@ -58,6 +58,8 @@ vector<Viaje> listaDeViajes;// lista de todos los viajes en archivo
 int numero;
 int CONTADOR_INCONSISTENCIAS;
 vector<Terminal> listaTerminales;
+int contadorTerminales();
+void crearTablaHash();
 
 
 
@@ -67,32 +69,33 @@ int main() {
    
     lecturaYCargoDeTerminales();
     lecturaDeArchivoViajes();
-    cout<<listaTerminales.size()<<listaTerminales.size()/0.8;
-   
-    Terminal *tabla =new Terminal[int(listaTerminales.size()/0.8)];
-    for (int i = 0; i < (int(listaTerminales.size()/0.8)); i++)
-		{
-
-            cout<<i<<endl;
-			Terminal nombre=Terminal("A","A","A","A",float(1.00),1, 1,1);
-			tabla[i]=nombre;
-			
-			cout<<i<<endl;
-        }
-    TablaHash tablaHash=TablaHash(listaTerminales,tabla);    
-    tablaHash.cargarMuchosElementos();
-    tablaHash.imprimirTablaHash();
+    
     //ordenar();
 
     Grafo grafo=Grafo();
-   //                       opciones(grafo);
-   //tablaHash.
-   // TablaHash tabla=TablaHash();
-    //tabla.menuDeInicioHash(listaTerminales);
+    opciones(grafo);
+   
     
     return 0;
 
 };
+int contadorTerminales(){
+    string line;
+    vector<string> lines; //Vector para guardar los datos del archivo
+    ifstream myfile (ARCHIVO_DE_TERMINALES, ios::in);
+  
+    if (myfile.is_open()){ //Si el archivo se abre
+        while(getline(myfile,line)){ //y se pueda leer una linea
+           
+            lines.push_back(line); //Se guarda en el vector
+         
+        }
+        myfile.close(); //al salir del ciclo se cierra el archivo
+    }
+    else cout<<"No se puede abrir el archivo";
+    return lines.size();
+
+}
 
 
 void mostrarDatos(){ //Funcion para mostrar los datos del archivo
@@ -209,14 +212,15 @@ void quitarTerminal(){
 };
 
 void opciones(Grafo grafo){
-    while (numero != 5 )
+    while (numero != 6 )
     {
     cout << "\n\nMenu de Opciones" << endl;
     cout << "1. Mostrar todas las terminales" << endl;
     cout << "2. Agregar una terminal" << endl;
     cout << "3. Eliminar una terminal" << endl;
     cout << "4. Consultar Viaje      " <<endl;// falta colocar opcion en switch(grafo)
-    cout << "5. Salir" << endl;
+    cout << "5. Ver Tabla Hash de Terminales    " <<endl;
+    cout << "6. Salir" << endl;
 
 
     cout<<"Ingrese un numero entre 1 y 5 segun desee: ";
@@ -255,7 +259,12 @@ void opciones(Grafo grafo){
             opciones(grafo);
         }
             break;
-        case 5:
+        case 5:  
+               
+               crearTablaHash();
+               break;
+                
+        case 6:
             cout << "Adios!" << endl; break;    
 
         default:
@@ -317,7 +326,7 @@ void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
                   }
                   else {
                     CONTADOR_INCONSISTENCIAS=CONTADOR_INCONSISTENCIAS+1;
-                //   cout<<"punto de partida erroneo"<<endl;
+              
                   }
               }   
              
@@ -410,7 +419,7 @@ void crearClaseTerminal(string cadena){
             destinosInternacionales=convierteAInt(subcadena);
 
             Terminal nombreT=Terminal(codigo,nombre,ciudad,pais,superficie,cantidadTerminales, destinosNacionales,destinosInternacionales);
-           // tablaHash.cargarUnElemento(nombreT);
+           
             listaTerminales.push_back(nombreT);
 
 } ; 
@@ -557,7 +566,28 @@ void imprimirListaTerminalesOrdenada(int op_orden){
         cout<<i+1<<" * " ;
         listaTerminales[i].imprimir();
     }
+};
+void crearTablaHash(){
+    cout<<listaTerminales.size()<<listaTerminales.size()/0.8;
+    cout<<"funciona contador"<<contadorTerminales();
+    int tamanioTabla=int(contadorTerminales()/.8);
+   
+    Terminal *tabla =new Terminal[tamanioTabla];
+    for (int i = 0; i < tamanioTabla; i++)
+		{
+
+          
+			Terminal nombre=Terminal("vacio","A","A","A",float(1.00),1, 1,1);
+			tabla[i]=nombre;
+			
+			cout<<i<<endl;
+        }
+    TablaHash tablaHash=TablaHash(listaTerminales,tabla);    
+    tablaHash.cargarMuchosElementos();
+    tablaHash.imprimirTablaHash();
+
 }
+
 
 
 //// para float
@@ -599,3 +629,4 @@ void imprimirListaTerminalesOrdenada(int op_orden){
 //         ordenarEntreF(op_orden,medio+1,hasta);
 //     }
 // };
+

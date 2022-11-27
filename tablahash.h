@@ -26,6 +26,6 @@ public:
     int FuncHash(string entrada);
     void cargarUnElemento(Terminal laTerminal);
     void cargarMuchosElementos();
-    void liberar();
+  
 };
 #endif // TABLAHASH_H_INCLUDED
