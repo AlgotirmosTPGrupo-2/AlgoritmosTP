@@ -66,9 +66,9 @@ void crearTablaHash();
 
 
 int main() {
-   
-    lecturaYCargoDeTerminales();
     lecturaDeArchivoViajes();
+    lecturaYCargoDeTerminales();
+    
     
     //ordenar();
 
@@ -324,16 +324,16 @@ void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
             Viaje viaje_Nuevo=Viaje(codigo_partida,codigo_destino,costo_viaje,horas_viaje);
 
 // grabar en la lista que corresponde a la terminal
-            for(int v=0; v<listaTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
-                  if(listaTerminales[v].esMiCodigo(codigo_partida)){
-                    listaTerminales[v].addViaje(viaje_Nuevo);
+            // for(int v=0; v<listaTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
+            //       if(listaTerminales[v].esMiCodigo(codigo_partida)){
+            //         listaTerminales[v].addViaje(viaje_Nuevo);
 
-                  }
-                  else {
-                    CONTADOR_INCONSISTENCIAS=CONTADOR_INCONSISTENCIAS+1;
+            //       }
+            //       else {
+            //         CONTADOR_INCONSISTENCIAS=CONTADOR_INCONSISTENCIAS+1;
               
-                  }
-              }   
+            //       }
+            //   }   
              
              listaDeViajes.push_back(viaje_Nuevo);
             
@@ -424,7 +424,15 @@ void crearClaseTerminal(string cadena){
             destinosInternacionales=convierteAInt(subcadena);
 
             Terminal nombreT=Terminal(codigo,nombre,ciudad,pais,superficie,cantidadTerminales, destinosNacionales,destinosInternacionales);
-           
+            
+            
+            for(int v=0; v<listaDeViajes.size(); v++)
+            { //Se recorre el vector para mostrar los datos
+                   if(listaDeViajes[v].get_codigo_partida()==nombreT.get_codigo())
+                   {
+                    nombreT.addViaje(listaDeViajes[v]);
+                    } 
+            }        
             listaTerminales.push_back(nombreT);
 
 } ; 
@@ -452,8 +460,8 @@ void imprimirTerminales(){
    
     cout<< "\nSELECCIONE LA OPCION DE ORDENAMIENTO PARA LA VISUALIZACION DE TERMINALES   "<<endl;
 
-   
-    cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2. NOMBRE \n 3. CIUDAD  \n 4. PAIS  \n 5. SUPERFICIE  \n 6. CANTIDAD DE TERMINALES  \n 7. DESTINOS NACIONALES  \n 8. DESTINOS INTERNACIONALES\n";
+    cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2. NOMBRE \n 3. CIUDAD  \n 4. PAIS  \n ";
+    //cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2. NOMBRE \n 3. CIUDAD  \n 4. PAIS  \n 5. SUPERFICIE  \n 6. CANTIDAD DE TERMINALES  \n 7. DESTINOS NACIONALES  \n 8. DESTINOS INTERNACIONALES\n";
     cin>>op_orden;
     
     cout<< "\n\n\t ** MOSTRANDO LA LISTA DE TERMINALES SIN ORDENAR ** "<<endl;    
