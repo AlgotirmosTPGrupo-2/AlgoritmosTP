@@ -59,7 +59,7 @@ void TablaHash:: cargarMuchosElementos(){
 			
                 int Pos = FuncHash(Clave);
                 cout<<"\nEl valor ascii es: "<<ObtenerNumero(Clave);
-                cout<<"\nValor hash: "<<Pos<<endl;
+                cout<<"\nValor hash: "<<Pos<<endl5;
               
                 if(((Tabla[Pos].get_codigo().compare("vacio")) == 0)|| (Tabla[Pos].get_codigo()==Clave))
                     {
