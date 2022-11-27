@@ -19,30 +19,24 @@ using namespace std;
 //vector <Terminal> vectorTerminales;
 Terminal *Tabla;
     
-TablaHash::TablaHash(){
-        //vectorTerminales=_vectorTerminales;
-        // float **costo=new float*[TERMINALES_CANTIDAD];
-        // string **recorrido=new string*[TERMINALES_CANTIDAD];
-        // for(int i=0;i<TERMINALES_CANTIDAD;i++){
-        //     costo[i]=new float[TERMINALES_CANTIDAD];
-        //     recorrido[i]=new string[TERMINALES_CANTIDAD];
-        // }
+TablaHash::TablaHash(vector <Terminal> _vectorTerminales){
+        
     };//constructor
 
 
-void TablaHash:: menuDeInicioHash(vector <Terminal> _vectorTerminales){
+// void TablaHash:: menuDeInicioHash(vector <Terminal> _vectorTerminales){
     
-    vectorTerminales=_vectorTerminales;
+//     vectorTerminales=_vectorTerminales;
     
-    //tablaHash=_tablaHash;
+//     //tablaHash=_tablaHash;
     
-    inicializarTabla();
+//   //  inicializarTabla();
        
-    imprimirTablaHash();    
+//     imprimirTablaHash();    
     
     
-    // solicitarDatosAUsuario();
-};
+//     // solicitarDatosAUsuario();
+// };
 void TablaHash:: cargarUnElemento(Terminal laTerminal){
 	string Clave=laTerminal.get_codigo();
 			
@@ -61,6 +55,27 @@ void TablaHash:: cargarUnElemento(Terminal laTerminal){
                         }
 
 }
+
+void TablaHash:: cargarMuchosElementos(){
+	for(int i=0;i<TERMINALES_CANTIDAD;i++){
+				string Clave=vectorTerminales[i].get_codigo();
+			
+                int Pos = FuncHash(Clave);
+                cout<<"\nEl valor ascii es: "<<ObtenerNumero(Clave);
+                cout<<"\nValor hash: "<<Pos;
+                
+                if(sizeof(Tabla[Pos])==0 || Tabla[Pos].get_codigo()==Clave)
+                    Tabla[Pos]= vectorTerminales[i];
+                else
+                    for(int i=Pos;i<TABLA_TAMANIO;i++)
+                        if(sizeof(Tabla[i])==0 )
+                        {
+                            Tabla[i]=vectorTerminales[i];
+                            break;
+                        }
+
+}}
+
 void TablaHash:: inicializarTabla(){
    
 	int OpcMen=0;

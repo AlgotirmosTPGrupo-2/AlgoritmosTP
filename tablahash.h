@@ -17,13 +17,14 @@ private:
 
 public:
     
-    TablaHash();//constructor
-    void menuDeInicioHash(vector <Terminal> _vectorTerminales);
+    TablaHash(vector <Terminal> _vectorTerminales);//constructor
+    //void menuDeInicioHash(vector <Terminal> _vectorTerminales);
     void inicializarTabla();
     void imprimirTablaHash();
     unsigned long long CharAEntero(char entrada);
     unsigned long long ObtenerNumero(string entrada);
     int FuncHash(string entrada);
     void cargarUnElemento(Terminal laTerminal);
+    void cargarMuchosElementos();
 };
 #endif // TABLAHASH_H_INCLUDED
