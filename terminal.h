@@ -21,7 +21,7 @@ private:
 public:
     
     Terminal(string _codigo,string _nombre,string _ciudad,string _pais,float _superficie,int _cantidadTerminales,int _destinosNacionales,int _destinosInternacionales);//constructor
-
+    Terminal();
 
     string get_codigo();
     string get_nombre();

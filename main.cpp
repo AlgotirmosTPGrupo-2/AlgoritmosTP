@@ -58,7 +58,7 @@ vector<Viaje> listaDeViajes;// lista de todos los viajes en archivo
 int numero;
 int CONTADOR_INCONSISTENCIAS;
 vector<Terminal> listaTerminales;
-//TablaHash tablaHash;
+
 
 
 
@@ -67,13 +67,25 @@ int main() {
    
     lecturaYCargoDeTerminales();
     lecturaDeArchivoViajes();
-    TablaHash tablaHash=TablaHash(listaTerminales);
+    cout<<listaTerminales.size()<<listaTerminales.size()/0.8;
+   
+    Terminal *tabla =new Terminal[int(listaTerminales.size()/0.8)];
+    for (int i = 0; i < (int(listaTerminales.size()/0.8)); i++)
+		{
+
+            cout<<i<<endl;
+			Terminal nombre=Terminal("A","A","A","A",float(1.00),1, 1,1);
+			tabla[i]=nombre;
+			
+			cout<<i<<endl;
+        }
+    TablaHash tablaHash=TablaHash(listaTerminales,tabla);    
     tablaHash.cargarMuchosElementos();
     tablaHash.imprimirTablaHash();
     //ordenar();
 
     Grafo grafo=Grafo();
-   // opciones(grafo);
+   //                       opciones(grafo);
    //tablaHash.
    // TablaHash tabla=TablaHash();
     //tabla.menuDeInicioHash(listaTerminales);

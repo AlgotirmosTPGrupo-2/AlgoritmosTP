@@ -17,7 +17,7 @@ private:
 
 public:
     
-    TablaHash(vector <Terminal> _vectorTerminales);//constructor
+    TablaHash(vector <Terminal> _vectorTerminales,Terminal *tabla);//constructor
     //void menuDeInicioHash(vector <Terminal> _vectorTerminales);
     void inicializarTabla();
     void imprimirTablaHash();
@@ -26,5 +26,6 @@ public:
     int FuncHash(string entrada);
     void cargarUnElemento(Terminal laTerminal);
     void cargarMuchosElementos();
+    void liberar();
 };
 #endif // TABLAHASH_H_INCLUDED
