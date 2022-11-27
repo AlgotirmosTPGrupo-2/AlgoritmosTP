@@ -24,7 +24,7 @@ using namespace std;
     vector<Viaje> Terminal :: getListadeViajes(){
         return listaDeMisViajes;
     } 
-
+    
     string Terminal::get_codigo(){
         return codigo;
     };

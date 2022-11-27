@@ -52,14 +52,15 @@ void TablaHash:: cargarUnElemento(Terminal laTerminal){
 
 void TablaHash:: cargarMuchosElementos(){
 	
-	
+	cout<<"*** SE ESTA PROCESANDO LA INFORMACION ***\n";
 	for(int i=0;i<TERMINALES_CANTIDAD;i++){
 
 				string Clave=vectorTerminales[i].get_codigo();
 			
                 int Pos = FuncHash(Clave);
+				
                 cout<<"\nEl valor ascii es: "<<ObtenerNumero(Clave);
-                cout<<"\nValor hash: "<<Pos<<endl5;
+                cout<<" Valor hash: "<<Pos<<" Terminal guardada "<<Clave<<endl;
               
                 if(((Tabla[Pos].get_codigo().compare("vacio")) == 0)|| (Tabla[Pos].get_codigo()==Clave))
                     {
@@ -141,6 +142,70 @@ int TablaHash:: FuncHash(string entrada)
 	unsigned long long Amodular = ObtenerNumero(entrada);
 	int Salida = Amodular%TABLA_TAMANIO;
 	return Salida;
+};
+int TablaHash:: buscarElemento(string terminalBuscada){
+				int guardarPos=9999;
+				int vueltas=0;
+				string Clave=terminalBuscada;
+			
+                int Pos = FuncHash(Clave);
+               
+              
+                if( ((Tabla[Pos].get_codigo().compare(Clave))==0))
+                    {
+				    
+					 cout<<"\nSE ENCONTRO \n";
+					 cout<<"\n  POSICION # "<<Pos<<" ";
+                  
+					 Tabla[Pos].imprimir();
+					 guardarPos=Pos;
+					 vueltas=TABLA_TAMANIO;
+					 
+					}
+                else 
+					{
+					
+					int inicio=Pos;	
+					bool seEncontro=false;
+					
+					while ( !seEncontro && vueltas!=TABLA_TAMANIO ){	
+                    for(int j=inicio;j<TABLA_TAMANIO;j++){
+                        if ((Tabla[j].get_codigo().compare(Clave)) == 0)
+                        {
+                           cout<<"\nSE ENCONTRO \n";
+                    	   cout<<"\n  POSICION # "<<j<<" ";
+					       Tabla[j].imprimir();
+						   guardarPos=j;
+						   seEncontro=true;
+						
+							
+                            break;
+
+                        }
+						if(vueltas==TABLA_TAMANIO){break;}
+						vueltas++;
+						
+				     }
+					 
+					 inicio=0;
+					 }
+					if(guardarPos==9999){ 
+					cout<<"EL ELEMENTO NO SE ENCONTRO\n";}
+//}
+}
+return  guardarPos;
+
+};
+void TablaHash:: eliminarElementoDeTabla(string elemento){
+	int pos=buscarElemento(elemento);
+	if (pos!=9999){
+		cout<<"Se eliminó el elemento\n";
+		Tabla[pos].imprimir();
+		Tabla[pos]=Terminal("--","--","--","--",float(0.00),0, 0,0);
+		
+	}
+	
+
 }
 
 

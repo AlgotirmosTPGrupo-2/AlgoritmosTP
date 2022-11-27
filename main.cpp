@@ -27,7 +27,7 @@
 using namespace std;
 
 void mostrarDatos();
-void opciones(Grafo);
+void opciones();
 void agregarTerminal();
 void quitarTerminal();
 int convierteAInt(string i);
@@ -72,8 +72,8 @@ int main() {
     
     //ordenar();
 
-    Grafo grafo=Grafo();
-    opciones(grafo);
+    
+    opciones();
    
     
     return 0;
@@ -162,6 +162,7 @@ void agregarTerminal(){
 
 void quitarTerminal(){
     string line,codigo;
+    int opcion;
     vector<string> lines; //Se crea un vector para guardar los datos del archivo
 
     ifstream myfile (ARCHIVO_DE_TERMINALES, ios::in);//Se abre el archivo en modo lectura
@@ -179,7 +180,10 @@ void quitarTerminal(){
     }
     cout<<"Ingrese el numero de la terminal que desea eliminar: "; //Se pide el numero de la linea que se desea eliminar
     cin>>numero;
+    cout<<"Esta Seguro que desea borrar la terminal ? \n 1. Si\n 2. No\n ";
+    cin>>opcion;
     //correccion
+    if(opcion==1){
     ofstream myfile3;
     myfile3.open(ARCHIVO_DE_TERMINALES, ios::out);//Se abre el archivo en modo lectura
     int borrar;
@@ -208,10 +212,11 @@ void quitarTerminal(){
         myfile2<<lines[i]<<endl;
     }
     myfile2.close(); //Se cierra el archivo nuevo
-    
+    }
+    else{cout<<"cancelada la eliminacion\n";}
 };
 
-void opciones(Grafo grafo){
+void opciones(){
     while (numero != 6 )
     {
     cout << "\n\nMenu de Opciones" << endl;
@@ -223,7 +228,7 @@ void opciones(Grafo grafo){
     cout << "6. Salir" << endl;
 
 
-    cout<<"Ingrese un numero entre 1 y 5 segun desee: ";
+    cout<<"Ingrese un numero entre 1 y 6 segun desee: ";
     cin>>numero;
 
 
@@ -231,18 +236,18 @@ void opciones(Grafo grafo){
         case 1:
             imprimirTerminales();
 
-            //imprimirViajes2();
-            
-           // mostrarDatos();
              break;
         case 2:
             agregarTerminal();
             cout<<"presione una tecla para continuar" <<endl;
             cin.get();
+            opciones();
            
             break;
         case 3:
             quitarTerminal();
+            opciones();
+            
            
              break;
         case 4:{
@@ -253,10 +258,10 @@ void opciones(Grafo grafo){
             costo[i]=new float[listaTerminales.size()];
             recorrido[i]=new string[listaTerminales.size()];
             }
-           
+            Grafo grafo=Grafo();
             grafo.menuDeInicio(listaTerminales,costo,recorrido);
             grafo.liberar();
-            opciones(grafo);
+            opciones();
         }
             break;
         case 5:  
@@ -269,7 +274,7 @@ void opciones(Grafo grafo){
 
         default:
             cout<<"Opcion incorrecta";
-            opciones(grafo);
+            opciones();
     }
 }
 };
@@ -448,14 +453,9 @@ void imprimirTerminales(){
     cout<< "\nSELECCIONE LA OPCION DE ORDENAMIENTO PARA LA VISUALIZACION DE TERMINALES   "<<endl;
 
    
-    cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2. NOMBRE \n 3. CIUDAD  \n 4. PAIS  \n ";
+    cout<<"INGRESE TIPO DE CONSULTA \n 1. CODIGO \n 2. NOMBRE \n 3. CIUDAD  \n 4. PAIS  \n 5. SUPERFICIE  \n 6. CANTIDAD DE TERMINALES  \n 7. DESTINOS NACIONALES  \n 8. DESTINOS INTERNACIONALES\n";
     cin>>op_orden;
-    // //if(op_orden==5){
-    //     ordenarF(op_orden);
     
-    //     imprimirListaTerminalesOrdenadaF(op_orden);
-
-    // }else {
     cout<< "\n\n\t ** MOSTRANDO LA LISTA DE TERMINALES SIN ORDENAR ** "<<endl;    
     imprimirListaTerminalesOrdenada(op_orden);    
     ordenar(op_orden);
@@ -512,9 +512,7 @@ void ordenarEntre (int op_orden,int desde, int hasta){
         ordenarEntre(op_orden,medio+1,hasta);
     }
 };
- float retornar_float(int op_orden ,Terminal t){
-    return t.GET_SUP;
- };
+ 
 
 string retornar_opcionS(int op_orden ,Terminal t){
  
@@ -534,6 +532,14 @@ string retornar_opcionS(int op_orden ,Terminal t){
              break;
         case 4:
              return t.get_pais();
+        case 5:
+             return convierteAStringF(t.get_superficie());     
+        case 6:
+             return convierteAStringInt(t.get_cantidadTerminales());  
+        case 7:
+             return convierteAStringInt(t.get_destinosNacionales());  
+        case 8:
+             return convierteAStringInt(t.get_destinosInternacionales());                    
         
         default:
             cout<<"   otra Opcion incorrecta";
@@ -567,9 +573,11 @@ void imprimirListaTerminalesOrdenada(int op_orden){
         listaTerminales[i].imprimir();
     }
 };
+
+//COMIENZA TABLA HASH
 void crearTablaHash(){
-    cout<<listaTerminales.size()<<listaTerminales.size()/0.8;
-    cout<<"funciona contador"<<contadorTerminales();
+    int opcion,pos;
+    string eleccion;
     int tamanioTabla=int(contadorTerminales()/.8);
    
     Terminal *tabla =new Terminal[tamanioTabla];
@@ -580,53 +588,34 @@ void crearTablaHash(){
 			Terminal nombre=Terminal("vacio","A","A","A",float(1.00),1, 1,1);
 			tabla[i]=nombre;
 			
-			cout<<i<<endl;
+			//cout<<i<<endl;
         }
-    TablaHash tablaHash=TablaHash(listaTerminales,tabla);    
+    TablaHash tablaHash=TablaHash(listaTerminales,tabla);   
     tablaHash.cargarMuchosElementos();
-    tablaHash.imprimirTablaHash();
+    cout<<"\nELEGIR \n 1. MOSTRAR TABLA \n 2. BUSCAR ELEMENTO \n 3. ELIMINAR ELEMENTO DE LA TABLA \n 4. SALIR DE MENU HASH \n";
+    cin>>opcion; 
+    while (opcion !=4)
+    {
+        if (opcion==1){tablaHash.imprimirTablaHash();}
+        if(opcion==2){
+            cout<<"INGRESAR CODIGO DE TERMINAL A BUSCAR \n";
+            cin>>eleccion; 
+            pos=tablaHash.buscarElemento(eleccion);}
+        if(opcion==3){
+            cout<<"INGRESAR CODIGO DE TERMINAL A ELIMINAR \n";
+            cin>>eleccion; 
+            tablaHash.eliminarElementoDeTabla(eleccion);
+            tablaHash.imprimirTablaHash();
+            } 
+        cout<<"\nELEGIR \n 1. MOSTRAR TABLA \n 2. BUSCAR ELEMENTO \n 3. ELIMINAR ELEMENTO DE LA TABLA \n 4. SALIR DE MENU HASH \n";
+        cin>>opcion;        /* code */
+    }
+    
+
+    
+    
 
 }
 
 
-
-//// para float
-
-
-// int acomodarF(int op_orden,int desde, int hasta, Terminal p){
- 
-//     int i = desde, j = hasta;
-//     while(i<j){
-
-//         while(retornar_opcionF(op_orden,listaTerminales[i])<=retornar_opcionF(op_orden,p )&& i<j)
-//             {i++;}
-//         while(retornar_opcionF(op_orden,listaTerminales[j])>retornar_opcionF(op_orden,p) && i<j)
-//             {j--;}
-//         if(i<j)
-//             {swap(listaTerminales[i],listaTerminales[j]);}
-//     }
-//    // imprimirListaTerminalesOrdenada();
-//     return (retornar_opcionF(op_orden,listaTerminales[i]) < retornar_opcionF(op_orden,p) ? i: i-1 );
-// };
-
-// void imprimirListaTerminalesOrdenadaF(int op_orden){
-
-//     cout<< " ** MOSTRANDO LA LISTA DE TERMINALES ORDENADA ** "<<endl;
-//     for(int i=0; i< listaTerminales.size();i++){
-//         cout<<i+1<<" * " <<listaTerminales[i].get_codigo()<<" - "<<retornar_opcionF(op_orden,listaTerminales[i])<<endl;
-//     }
-// }
-// void ordenarF (int op_orden){
-//      ordenarEntreF(op_orden,0, listaTerminales.size()-1);
-// };
-
-// void ordenarEntreF (int op_orden,int desde, int hasta){
-//     if (desde<hasta){
-//         Terminal p = listaTerminales[desde];  //p es el pivot, un elemento cualquiera del vector
-//         int medio = acomodarF(op_orden,desde, hasta , p);  
-//         swap(listaTerminales[desde],listaTerminales[medio]);
-//         ordenarEntreF( op_orden,desde, medio-1);
-//         ordenarEntreF(op_orden,medio+1,hasta);
-//     }
-// };
 

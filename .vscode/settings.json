@@ -53,6 +53,7 @@
         "xstddef": "cpp",
         "xtr1common": "cpp",
         "bitset": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "regex": "cpp"
     }
 }
