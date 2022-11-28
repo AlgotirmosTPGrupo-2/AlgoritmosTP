@@ -207,5 +207,8 @@ void TablaHash:: eliminarElementoDeTabla(string elemento){
 	
 
 }
+void  TablaHash ::liberarMemoria(){
+	delete[] Tabla;
+}
 
 

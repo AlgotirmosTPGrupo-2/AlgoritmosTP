@@ -267,6 +267,7 @@ void opciones(){
         case 5:  
                
                crearTablaHash();
+
                break;
                 
         case 6:
@@ -323,17 +324,7 @@ void lecturaDeArchivoViajes(){ //Funcion para mostrar los datos del archivo
             
             Viaje viaje_Nuevo=Viaje(codigo_partida,codigo_destino,costo_viaje,horas_viaje);
 
-// grabar en la lista que corresponde a la terminal
-            // for(int v=0; v<listaTerminales.size(); v++){ //Se recorre el vector para mostrar los datos
-            //       if(listaTerminales[v].esMiCodigo(codigo_partida)){
-            //         listaTerminales[v].addViaje(viaje_Nuevo);
 
-            //       }
-            //       else {
-            //         CONTADOR_INCONSISTENCIAS=CONTADOR_INCONSISTENCIAS+1;
-              
-            //       }
-            //   }   
              
              listaDeViajes.push_back(viaje_Nuevo);
             
@@ -618,6 +609,8 @@ void crearTablaHash(){
         cout<<"\nELEGIR \n 1. MOSTRAR TABLA \n 2. BUSCAR ELEMENTO \n 3. ELIMINAR ELEMENTO DE LA TABLA \n 4. SALIR DE MENU HASH \n";
         cin>>opcion;        /* code */
     }
+    delete[] tabla;
+   
     
 
     

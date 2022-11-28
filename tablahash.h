@@ -28,5 +28,6 @@ public:
     void cargarMuchosElementos();
     int buscarElemento(string terminalBuscada);
     void eliminarElementoDeTabla(string elemento);
+    void liberarMemoria();
 };
 #endif // TABLAHASH_H_INCLUDED
