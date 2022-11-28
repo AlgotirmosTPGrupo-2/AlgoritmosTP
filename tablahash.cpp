@@ -13,7 +13,8 @@
 #include<stdlib.h>
 
 #define TERMINALES_CANTIDAD vectorTerminales.size()
-#define TABLA_TAMANIO int(vectorTerminales.size()/0.8)
+//#define TABLA_TAMANIO int(vectorTerminales.size()/0.8)
+#define TABLA_TAMANIO int(round(20/0.8))
 using namespace std;
 
 //vector <Terminal> vectorTerminales;

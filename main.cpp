@@ -260,7 +260,15 @@ void opciones(){
             }
             Grafo grafo=Grafo();
             grafo.menuDeInicio(listaTerminales,costo,recorrido);
-            grafo.liberar();
+            for (int primero = 0; primero < TERMINALES_CANTIDAD;primero++){
+                delete[] costo[primero];
+                 delete[] recorrido[primero];
+
+                 }
+            delete[] costo;
+            delete[] recorrido; 
+                 
+           
             opciones();
         }
             break;
@@ -423,7 +431,9 @@ void crearClaseTerminal(string cadena){
                    {
                     nombreT.addViaje(listaDeViajes[v]);
                     } 
-            }        
+            }  
+            //este iria al hash
+
             listaTerminales.push_back(nombreT);
 
 } ; 
@@ -577,7 +587,10 @@ void imprimirListaTerminalesOrdenada(int op_orden){
 void crearTablaHash(){
     int opcion,pos;
     string eleccion;
-    int tamanioTabla=int(contadorTerminales()/.8);
+  //  int tamanioTabla=int (round(contadorTerminales()/.8));
+     int tamanioTabla=int(round(20/.8));
+
+
    
     Terminal *tabla =new Terminal[tamanioTabla];
     for (int i = 0; i < tamanioTabla; i++)
